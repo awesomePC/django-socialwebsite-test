@@ -1,0 +1,67 @@
+{% load i18n %}
+ <style>
+.flex-parent {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.box {
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid skyblue;
+
+}
+</style>
+ 
+<div class="flex-parent">
+    <div class="box">Total User: {{total_user}}</div>
+  
+    <div class="box">Total Posts: {{total_post}}</div>
+    <div class="form-group">
+      <label for="sel1">Current Month New Users:</label>
+      <select class="form-control" id="sel1">
+        <option value="">New users </option>
+        {% for n in new_user %}
+          <option value="{{n.username}}">{{n.username}}</option>
+        {% endfor %}
+      </select>
+    </div>
+   
+</div>
+ 
+<div class="dashboard-container columns_{{ columns|length }} cf">
+     
+    {% for i in columns %}
+        <div class="dashboard-column-wrapper">
+            <div class="dashboard-column{% if forloop.first %} first{% endif %}">
+                {% for module in modules %}
+                    {% if module.model.column == i %}
+                        {% include "jet.dashboard/module.html" with module=module %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="dialog-confirm" id="module-remove-dialog" title="{% trans 'Delete widget' %}">
+    <p>{% trans "Are you sure want to delete this widget?" %}</p>
+</div>
+
+<form action="{% url 'jet-dashboard:update_dashboard_modules' %}" method="POST" id="update-dashboard-modules-form">
+    {% csrf_token %}
+    <input type="hidden" name="app_label" value="{% if app_label %}{{ app_label }}{% endif %}">
+    <input type="hidden" name="modules">
+</form>
+
+<form action="{% url 'jet-dashboard:update_dashboard_module_collapse' %}" method="POST" id="update-dashboard-module-collapse-form">
+    {% csrf_token %}
+    <input type="hidden" name="id">
+    <input type="hidden" name="collapsed">
+</form>
+
+<form action="{% url 'jet-dashboard:remove_dashboard_module' %}" method="POST" id="remove-dashboard-module-form">
+    {% csrf_token %}
+    <input type="hidden" name="id">
+</form>

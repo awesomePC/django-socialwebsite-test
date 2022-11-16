@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="25" viewBox="0 0 32 25">
+  <g id="Group_15602" data-name="Group 15602" transform="translate(-795 -78)">
+    <g id="Rectangle_6620" data-name="Rectangle 6620" transform="translate(795 78)" fill="#fff" stroke="rgba(112,112,112,0)" stroke-width="1">
+      <rect width="32" height="25" rx="3" stroke="none"/>
+      <rect x="0.5" y="0.5" width="31" height="24" rx="2.5" fill="none"/>
+    </g>
+    <g id="vuesax_outline_arrow-left" data-name="vuesax/outline/arrow-left" transform="translate(116.035 -108.465)">
+      <g id="arrow-left" transform="translate(684 188)">
+        <path id="Vector" d="M6.23,12.461a.678.678,0,0,1-.484-.2L.2,6.714a.689.689,0,0,1,0-.969L5.745.2a.685.685,0,0,1,.969.969L1.652,6.23l5.062,5.062a.689.689,0,0,1,0,.969A.663.663,0,0,1,6.23,12.461Z" transform="translate(2.515 4.736)" fill="#292d32"/>
+        <path id="Vector-2" data-name="Vector" d="M16.064,1.371H.685A.69.69,0,0,1,0,.685.69.69,0,0,1,.685,0H16.064a.69.69,0,0,1,.685.685A.69.69,0,0,1,16.064,1.371Z" transform="translate(2.668 10.28)" fill="#292d32"/>
+        <path id="Vector-3" data-name="Vector" d="M0,0H21.93V21.93H0Z" fill="none" opacity="0"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,439 @@
+{% extends 'layouts/base.html' %} 
+{% block content %}
+
+  
+  <!-- add loading -->
+<div class="container-fluid">
+  <!-- Overlays -->
+    <div class=""> 
+      {% csrf_token %}
+      <!-- Upload Videos -->
+      <div id="uploadVideos" class="bg-slate-400/50 absolute w-full h-screen z-50 hidden ">
+        <div class="bg-white w-[500px] mx-auto mt-24 pt-8 pb-10 px-10 shadow-3xl rounded-lg">
+          <div class="space-y-8">
+            <div class="flex items-start justify-between">
+              <div>
+                <h1 class="font-bold text-2xl">Upload</h1>
+              </div>
+              <span id="closeUploader" class=" cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-modal.svg" alt=""></span>
+            </div>
+            <div class="space-y-4">
+              <div class="flex flex-col  pb-6">
+                <img src="{{ ASSETS_ROOT }}/img/upload-graph.svg" class="w-72 mx-auto" alt="">
+              </div>
+
+              <div class="flex flex-col border-2 border-slate-300 rounded-lg border-dashed py-6 px-12 space-y-4">
+                <p class="mx-auto text-center">Drag your photos or videos here to start uploading.</p>
+                <button type="file" class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600">Browse files</button>
+              </div>
+
+              <div class="flex space-y-1 items-center justify-between bg-slate-100 p-2 rounded-lg px-4 " >
+                <div class="flex">
+                  <div><img src="{{ ASSETS_ROOT }}/icons/play-icon.svg" class="w-12" alt=""></div>
+                  <div class="ml-2">
+                    <p >Video.MP4</p>
+                    <P class="text-sm text-slate-400">5 MB</P>
+                  </div>
+                </div>
+
+                <div><img class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/delete-video.svg" alt=""></div>
+
+              </div>
+
+            </div>
+            <button type="button"  class="closeUploader btn-md-primary w-full">Upload</button>
+          </div>
+        </div>
+      </div>
+      <!--  Upload Videos End -->
+
+    </div>
+  <!-- Overlays End -->
+
+
+  <div class="bg-elements">
+    <div class="bgtop absolute -z-40 top-6 right-2/4"><img src="{{ ASSETS_ROOT }}/img/bg-top.png" alt=""></div>
+    <div class="bgright absolute -z-40 -right-10 top-52"><img src="{{ ASSETS_ROOT }}/img/bg-right.png" alt=""></div>
+    <div class="bgleft absolute -z-40 -left-10 top-96"> <img src="{{ ASSETS_ROOT }}/img/bg-left.png" alt=""></div>
+    <div class="bgbottom absolute  -bottom-10 right-96"><img src="{{ ASSETS_ROOT }}/img/bg-bottom.png" alt=""></div>
+  </div>
+
+
+
+
+  <!-- The content -->
+  <div class="flex items-center justify-center mt-10 space-x-14 ">
+    <div class="z-[45]">
+      <img id="prevVideo" class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/prev-video.svg" alt="">
+    </div>
+    <div>
+       <!-- Videos -->
+      <div>
+        <div class="bg-white p-5 rounded-lg shadow-3xl relative">
+
+          <!-- comments -->
+
+          <!--  -left-96 -->
+          <div id="commentsParrent"  class="w-[340px] h-[710px] rounded-lg z-40 -left-96 absolute top-[0px]  overflow-hidden ">
+
+            <div class="relative">
+
+              <!-- top 710px -->
+              <div style="top:710px;" id="userComments" class="bg-white w-[340px] h-[810px] p-5 absolute transition-all duration-700 rounded-lg" >
+                <div class="space-y-4">
+                  <div class="CommnetHeader flex items-center justify-between border-b pb-3 border-slate-200">
+                    <div class="flex space-x-4">
+                      <div class="text-base font-medium">40 Comments</div>
+                      <div class="flex"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-2 flex items-center">75</span></div>
+                    </div>
+                    <span id="closeComments" class=" cursor-pointer ">
+                      <img src="{{ ASSETS_ROOT }}/img/close-comment.png" alt="">
+                    </span>
+                  </div>
+                  <!-- first comment -->
+                  <div class="1comments ">
+                    <div class="border  rounded-lg border-slate-200 ">
+                      <div class="p-4  ">
+                      <div class="flex items-start ">
+                        <div class="flex-none"><img  src="{{ ASSETS_ROOT }}/img/comment-1.png" alt=""></div>
+                        <div class="flex flex-col ml-3">
+                          <p class="font-base font-semibold pb-2 mt-2">Jordan <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
+                          <p>This is hilarious. I can definitly relate to this lol.</p>
+                          <div class="border rounded-lg border-slate-200 mt-4  ">
+                            <div class="flex  px-4 py-4 ">
+                              <div class="flex-none"><img  src="{{ ASSETS_ROOT }}/img/comment-2.png" alt=""></div>
+                              <div class="flex flex-col ml-2">
+                                <p class="font-base font-semibold pb-2 mt-1">Jordan <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
+                                <p>Same here</p>
+                              </div>
+                            </div>
+                            <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2 ">
+                              <p class="text-primary font-bold cursor-pointer">React</p>
+                              <div class="flex items-center cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-1 font-semibold">8</span></div>
+                              <p class="cursor-pointer">Reply</p>
+                            </div>
+                          </div>
+                          <div class=" px-4 py- mt-3">
+                            <p class="text-slate-800 font-normal underline cursor-pointer"> <span class="font-bold">6</span>  More replies</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2">
+                        <p class="text-primary font-bold cursor-pointer">React</p>
+                        <div class="flex items-center cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-1 font-semibold">You</span><span class="">, 40 others</span></div>
+                        <p class="cursor-pointer">Reply</p>
+                      </div>
+                    </div>
+                  </div>
+                    <!-- first comment end -->
+                    <!-- second comment  -->
+                    <div class="1comments pb-14">
+                      <div class="border  rounded-lg border-slate-200 ">
+                        <div class="p-4  ">
+                        <div class="flex items-start ">
+                          <div class="flex-none"><img  src="{{ ASSETS_ROOT }}/img/comment-3.png" alt=""></div>
+                          <div class="flex flex-col ml-3">
+                            <p class="font-base font-semibold pb-2 mt-2">Jordan <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
+                            <p>This is awesome</p>
+                          </div>
+                        </div>
+                      </div>
+                        <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2">
+                          <p class="text-slate-800 cursor-pointer font-bold">React</p>
+                          <p class="cursor-pointer">Reply</p>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- second comment end -->
+
+                    <!-- write comment -->
+
+                  <div class="flex items-start px rounded-lg ">
+                    <input type="text" placeholder="Comment" class="bg-slate-100 rounded-full border-none w-full h-11
+                    mr-2 focus:ring-primary pl-6 ">
+                    <img src="{{ ASSETS_ROOT }}/img/emoji.png"  class="w-auto h-auto cursor-pointer  mr-2" alt="">
+                    <img src="{{ ASSETS_ROOT }}/icons/send.svg"  class="w-auto h-auto cursor-pointer" alt="">
+                </div>
+                    <!-- write comment end -->
+                </div>
+                </div>
+                
+            </div>
+
+          </div>
+
+          <div class="absolute -bottom-10 left-0">
+            <img src="{{ ASSETS_ROOT }}/img/curve.png" alt="">
+          </div>
+          
+          <div class="header flex justify-between mb-4">
+            <div class="flex items-center justify-center space-x-2">
+              <a href="#"><img  class="cursor-pointer profile_img" src="{% if user.profile.image %}{{user.profile.image.url}} {% else %} /static/assets/img/profile-pic.png {% endif %}" alt=""></a>
+              <div>
+                <a class="text-base font-bold cursor-pointer ">{{user.username.title}}</a>
+                <div class="flex space-x-3 opacity-70">
+                  <div class="flex space-x-1">
+                    <img src="{{ ASSETS_ROOT }}/icons/views.svg" alt="">
+                    <p>1,5K</p>
+                  </div>
+                  <div class="flex space-x-1">
+                    <img src="{{ ASSETS_ROOT }}/icons/comments.svg" alt="">
+                    <p>217</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col items-center">
+              <img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt="">
+              <p class="text-sm text-slate-700">984</p>
+            </div>
+
+          </div>
+          <div class="videos ">
+            <div class="relative">
+              <div class="relative w-[299px] overflow-hidden">
+                <div id="scrollVideos" class="flex transition-all duration-1000" style="margin-left: -320px">
+                  <video id="video1" width="300" class="mr-4" >
+                    <source src="{{ ASSETS_ROOT }}/videos/user-video.mp4" type="video/mp4">
+                    Your browser does not support HTML video.
+                  </video>
+                  <video id="video2" width="300" class="" >
+                    <source src="{{ ASSETS_ROOT }}/videos/user-video2.mp4" type="video/mp4">
+                    Your browser does not support HTML video.
+                  </video>
+                </div>
+
+              </div>
+
+              <div class="absolute bottom-0">
+                <a href="#"><img src="{{ ASSETS_ROOT }}/icons/share.svg" class="absolute bottom-4 left-4" alt=""></a>
+                
+                <p class="absolute text-white right-4 bottom-4" >5 mins ago</p>
+                <img src="{{ ASSETS_ROOT }}/img/b-overlay.png"  alt="">
+              </div>
+            </div>
+            <div style="top:690px; " id="openComments" class="openChat absolute  left-[144px] transition-all duration-700 z-50">
+              <img class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/open-comments.svg" alt="">
+            </div>
+
+          </div>
+
+
+          <!-- Indicators-->
+          <!-- <div class="flex justify-center py-4">
+            <div class="flex space-x-2">
+              <div class="w-7 h-1 bg-slate-900 rounded-full"></div>
+              <div class="w-3 h-1 bg-slate-300 rounded-full"></div>
+              <div class="w-3 h-1 bg-slate-300 rounded-full"></div>
+              <div class="w-3 h-1 bg-slate-300 rounded-full"></div>
+              <div class="w-3 h-1 bg-slate-300 rounded-full"></div>
+            </div>
+          </div> -->
+          <!-- Indicators End -->
+
+
+
+        </div>
+      </div>
+      <!-- Videos End -->
+
+ 
+
+    </div>
+    <div>
+      <img id="nextVideo" class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/next-video.svg" alt="">
+    </div>
+    
+  </div>
+  <!-- The content End -->
+
+
+
+  <!-- bottom elements -->
+  <div class="flex w-full items-center justify-between absolute bottom-10">
+    <div class="flex items-center space-x-2 ml-20">
+      <img src="{{ ASSETS_ROOT }}/icons/location.svg" alt="">
+      <p>Toronto, Canada</p>
+    </div>
+    <div class="mr-20 space-x-4">
+      <a href="#">Contact us</a>
+      <a href="#">Privacy policy</a>
+    </div>
+  </div>
+ 
+  <!-- Profile -->
+  <div class="">
+    <!-- back -->
+    <div class="ml-12 absolute top-[120px] z-50 ">
+      <a href="index.html" class="btn-md-primary flex bg-white hover:bg-white shadow-3xl">
+        <span class="-ml-7"><img src="{{ ASSETS_ROOT }}/icons/back-profile.svg" alt=""></span>
+        <p class="text-slate-800 pl-2"> Back</p>
+      </a>
+    </div>
+    <!-- back end-->
+    <!-- Profile Card -->
+    <div class="bg-white w-80 rounded-lg p-6  space-y-8 shadow-3xl mr-12 absolute top-[120px] right-0 ">
+      <div class="flex border-b border-slate-200 pb-4 items-center">
+        <div class="mr-3">
+          <img src="{% if user.profile.image %}{{user.profile.image.url}} {% else %} /static/assets/img/profile-pic.png {% endif %}" class="flex-none w-auto profile_img" alt="">
+        </div>
+        <div class="">
+          <p class="text-base font-bold">{{user.username.title}}</p>
+          <p class="text-base text-slate-600">{% if user.profile.address %}{{user.profile.address}}{% endif %}</p>
+        </div>
+      </div>
+
+      <div class="flex ">
+        <div class="flex items-center">
+          <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+            <img src="{{ ASSETS_ROOT }}/icons/friends.svg" alt="">
+          </div>
+          <div class=" w-24 ">
+            <p class="font-normal text-sm text-slate-500">Friends</p>
+            <p class="font-bold text-base font-roboto"> 5,3K</p>
+          </div>
+        </div>
+  
+        <div class="flex items-center">
+          <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+            <img src="{{ ASSETS_ROOT }}/icons/views.svg" alt="">
+          </div>
+          <div class=" ">
+            <p class="font-normal text-sm text-slate-500">Views</p>
+            <p class="font-bold text-base font-roboto"> 7,2K</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex ">
+        <div class="flex items-center">
+          <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+            <img src="{{ ASSETS_ROOT }}/icons/comments.svg" alt="">
+          </div>
+          <div class="w-24 ">
+            <p class="font-normal text-sm text-slate-500">Comments</p>
+            <p class="font-bold text-base font-roboto"> 741K</p>
+          </div>
+        </div>
+  
+        <div class="flex items-center">
+          <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+            <img src="{{ ASSETS_ROOT }}/icons/reactions.svg" alt="">
+          </div>
+          <div class=" ">
+            <p class="font-normal text-sm text-slate-500">Reactions</p>
+            <p class="font-bold text-base font-roboto"> 10,8K</p>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="pt-4 flex space-x-4">
+        <a href="{% url 'message_chat' %}" class="btn-sm-primary w-full">Send Message </a>
+
+        <a href="{% url 'edit_profile' id=user.profile.id %}" class="btn btn-sm-primary w-full" >Edit profile</a>
+      </div>
+    </div>
+
+    <!-- Profile Card End -->
+
+  </div>
+</div>
+<!-- Profile End -->
+<script>
+
+
+
+  document.getElementById("video1").addEventListener("click", playPause);
+  var myVideo = document.getElementById("video1");
+
+  function playPause() {
+      if (myVideo.paused)
+          myVideo.play();
+      else
+          myVideo.pause();
+  }
+
+  document.getElementById("video2").addEventListener("click", playPause2);
+  var myVideo2 = document.getElementById("video2");
+
+  function playPause2() {
+      if (myVideo2.paused)
+          myVideo2.play();
+      else
+          myVideo2.pause();
+  }
+
+
+  document.getElementById("openComments").addEventListener("click", showComments);
+
+  var userComments = document.getElementById("userComments");
+  var hideParrent = document.getElementById("hideParrent");
+  var openBtn = document.getElementById("openComments");
+  var commentsParrent = document.getElementById("commentsParrent");
+
+  function showComments() {
+
+      if (userComments.style.top === "710px") {
+          userComments.style.top = "0px";
+          openBtn.style.top = "650px";
+          openBtn.style.zIndex = "0";
+          commentsParrent.style.left = "0";
+          commentsParrent.classList.remove("delay-700");
+      } else {
+          userComments.style.top = "710px";
+
+      }
+
+
+  }
+
+  document.getElementById("closeComments").addEventListener("click", closeComments)
+
+  function closeComments() {
+
+      if (userComments.style.top === "0px") {
+          userComments.style.top = "710px";
+          openBtn.style.top = "690px";
+          openBtn.style.zIndex = "50";
+          commentsParrent.style.left = "-400px";
+          commentsParrent.classList.add("delay-700");
+      }
+
+  }
+
+
+  document.getElementById("nextVideo").addEventListener("click", nextVideo)
+
+  var scrollVideos = document.getElementById("scrollVideos");
+
+  function nextVideo() {
+
+      if (scrollVideos.style.marginLeft === "-320px") {
+          scrollVideos.style.marginLeft = "0px";
+      }
+
+  }
+
+
+  document.getElementById("prevVideo").addEventListener("click", prevVideo)
+
+  var prevVideo = document.getElementById("prevVideo");
+
+  function prevVideo() {
+
+      if (scrollVideos.style.marginLeft === "0px") {
+          scrollVideos.style.marginLeft = "-320px";
+
+      }
+
+  }
+
+</script>
+
+{% endblock %}
+
+<!-- Specific Page JS goes HERE  -->
+ 

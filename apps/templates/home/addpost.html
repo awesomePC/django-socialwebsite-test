@@ -1,0 +1,188 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+
+      <!-- Upload Videos -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12"></div>
+            <div class="col-md-8 col-sm-12">
+                <form method="post" id="addPost" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" id="latitude" name="lat"> 
+                    <input type="hidden" id="longitude" name="lng">
+                    <div id="uploadVideos" class="  ">
+                        <div class="bg-white w-auto sm:w-[500px] mx-auto mt-16 pt-8 pb-10 px-10 shadow-3xl rounded-lg">
+                        <div class="space-y-8">
+                            <div class="flex items-start justify-between">
+                            <div>
+                                <h1 class="font-bold text-2xl">Upload</h1>
+                            </div>
+                            <span id="closeUploader" class=" cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-modal.svg" alt=""></span>
+                            </div>
+                            <div class="space-y-4">
+                            <div class="flex flex-col  pb-6">
+                                <img src="{{ ASSETS_ROOT }}/img/upload-graph.svg" class="w-72 mx-auto" alt="">
+                            </div>
+                             
+                            <br>
+                            <label for="Caption">Caption</label><br>
+                                <textarea id="caption" class="form-control" name="caption" placeholder="Write your Caption.." rows="2" cols="38"></textarea>
+                            </textarea>
+                            <br>
+
+                           
+                            <div class="flex flex-col border-2 border-slate-300 rounded-lg border-dashed py-6 px-12 space-y-4 "  >
+                                <p class="mx-auto text-center">Drag your photos or videos here to start uploading.</p>
+                                <div class="mx-auto text-center display-img-vid-con" id="img-vid-con"></div>
+                                <!-- <img class="img-radius img-fluid wid-80 imageshow profile_image"
+                                    id="image-display"> -->
+                                <!-- <input type="file" id="file_id" name="filename" onchange="loadFile(event)"  accept="image/*, video/*" required> -->
+                                <!-- <button type="file" class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600">Browse files</button> -->
+                                <input type="file" accept="image/*, video/*" name="img-vid" id="inp-img-vid">
+                            </div>
+
+                            <div class="flex space-y-1 items-center justify-between bg-slate-100 p-2 rounded-lg px-4 " >
+                                <div class="flex">
+                                <div><img src="{{ ASSETS_ROOT }}/icons/play-icon.svg" class="w-12" alt=""></div>
+                                <div class="ml-2">
+                                    <p >Video.MP4</p>
+                                    <P class="text-sm text-slate-400">5 MB</P>
+                                </div>
+                                </div>
+
+                                <div><img class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/delete-video.svg" alt=""></div>
+
+                            </div>
+
+                            </div>
+                            <button type="submit"  class="closeUploader btn-md-primary w-full">Upload</button>
+                        </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2 col-sm-12"></div>
+        </div>
+    </div>
+
+<script>
+
+
+//$("#inp-img-vid").change( function(){ imgPreview(this); } );
+document.getElementById("inp-img-vid").addEventListener("change", onFileSelected, false);
+
+var tmpElement; //will be dynamically changed to Image or Video
+
+var file, file_ext, file_path, file_type, file_name;
+
+
+function show_Info_popUP()
+{
+    // alert("File is selected... " + "\n name : " + file_name  + "\n type : " + file_type + "\n ext : " + file_ext );
+}
+
+function onFileSelected ( input )
+{
+ 
+    //if(input.files && input.files[0])
+    if( input.target.files[0] )
+    {
+        file = input.target.files[0]; // FileList object
+        
+        file_ext; //# will extract file extension
+        file_type = file.type; file_name = file.name;
+        file_path = (window.URL || window.webkitURL).createObjectURL(file);
+        
+        //# get file extension (eg: "jpg" or "jpeg" or "webp" etc)
+        file_ext = file_name.toLowerCase();
+        file_ext = file_ext.substr( (file_ext.lastIndexOf(".")+1), (file_ext.length - file_ext.lastIndexOf(".")) );
+        
+        //# get file type (eg: "image" or "video")
+        file_type = file_type.toLowerCase();
+        file_type = file_type.substr( 0, file_type.indexOf("/") );
+        
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        
+        //reader.onload = function(e)
+        reader.onloadend = function(evt) 
+        { 
+            //# POP-UP ...if you want to show (Alert box with) file details...
+            show_Info_popUP();
+            
+            if (evt.target.readyState == FileReader.DONE) 
+            {
+                //# get container...
+                let container = document.getElementById("img-vid-con");
+                
+                //# remove any already existing child element(s)
+                while (container.firstChild)  
+                { container.removeChild(container.firstChild); }
+                
+                //# if IMAGE...
+                if ( file_type == "image" )
+                {
+                    tmpElement = document.createElement( "img");
+                    tmpElement.setAttribute("id", "preview-img");
+                }
+                
+                //# if VIDEO...
+                if ( file_type == "video" )
+                {
+                    tmpElement = document.createElement( "video");
+                    tmpElement.setAttribute("id", "preview-vid");
+                    tmpElement.setAttribute("controls", "true" );
+                    
+                    tmpElement.addEventListener("loadeddata", () => 
+                    {
+                        //# what to do when some video data is loaded
+                        
+                        if (tmpElement.readyState >= 3) 
+                        { 
+                            //# what to do when video's first frame is ready
+                            tmpElement.muted = true; //# if you want silent preview
+                            tmpElement.play();
+                        }
+            
+                    }); 
+                }
+                
+                //# finalise display size
+                tmpElement.width = 640; tmpElement.height = 400;
+                
+                tmpElement.setAttribute("src", file_path);
+                container.appendChild(tmpElement);
+            }
+        
+        }
+        
+    }
+}
+
+   // get location
+   function getLocation()
+     {
+     if (navigator.geolocation)
+     {
+     navigator.geolocation.getCurrentPosition(showPosition);
+     }
+     else{x.innerHTML="Geolocation is not supported by this browser.";}
+     }
+     function showPosition(position)
+     {
+
+         $("#latitude").val(position.coords.latitude )
+         $('#longitude').val(position.coords.longitude)
+     }
+     getLocation()
+ 
+</script>
+
+{% endblock %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+  <script src="{{ ASSETS_ROOT }}/js/index.js"></script>
+{% endblock javascripts %}

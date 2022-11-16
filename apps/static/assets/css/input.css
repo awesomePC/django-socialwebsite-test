@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+.btn-lg-primary {
+    @apply bg-primary p-4 text-base font-proxima font-medium rounded-md text-white px-5 hover:bg-primary/80;
+  }
+
+  .btn-md-primary {
+    @apply bg-primary p-3 text-base font-proxima font-medium rounded-md text-white px-5 hover:bg-primary/80;
+  }
+
+  .btn-sm-primary {
+    @apply bg-primary p-2 text-sm font-proxima font-medium rounded-md text-white px-5 hover:bg-primary/80;
+  }
+
+  .btn-secendary-border {
+    @apply bg-transparent p-3 rounded-md text-base w-full font-proxima font-normal text-primary border border-primary
+    hover:bg-primary hover:text-white transition-all;
+  }
+
+  .btn-secendary-sm-border {
+    @apply bg-transparent p-3 text-sm  rounded-md  w-full font-proxima font-normal text-primary border border-primary
+    hover:bg-primary hover:text-white transition-all;
+  }
+
+  .blabel {
+    @apply text-sm mb-1 text-slate-600 ;
+  }
+
+  .binput {
+    @apply p-3 pl-4  text-base rounded-lg placeholder:text-slate-400 placeholder:text-base placeholder:font-normal text-slate-900 border-slate-800/20 border
+                focus:outline-none focus:ring-0 focus:border-primary;
+  }
+
+  .bcheckbox {
+    @apply p-3 rounded-md text-primary border-slate-800/20 border
+                focus:outline-none focus:ring-0 focus:border-primary;
+  }
+  
+}
+

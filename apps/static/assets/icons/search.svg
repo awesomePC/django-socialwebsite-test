@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="vuesax_linear_search-zoom-in" data-name="vuesax/linear/search-zoom-in" transform="translate(-172 -188)" opacity="0.5">
+    <g id="search-zoom-in">
+      <path id="Vector" d="M18,9A9,9,0,1,1,9,0,9,9,0,0,1,18,9Z" transform="translate(174 190)" fill="none" stroke="#9d9da5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Vector-2" data-name="Vector" d="M0,0H5" transform="translate(180.5 199)" fill="none" stroke="#9d9da5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Vector-3" data-name="Vector" d="M0,5V0" transform="translate(183 196.5)" fill="none" stroke="#9d9da5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Vector-4" data-name="Vector" d="M0,0H24V24H0Z" transform="translate(172 188)" fill="none" opacity="0"/>
+      <path id="Path_19438" data-name="Path 19438" d="M190.472,206.72l2.089,2.161" transform="translate(1 1)" fill="none" stroke="#9d9da5" stroke-linecap="round" stroke-width="1.5"/>
+    </g>
+  </g>
+</svg>

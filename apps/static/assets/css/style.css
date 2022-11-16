@@ -1,0 +1,62 @@
+.imageshow{
+    width: 75px !important;
+    height: 75px !important;
+    border-radius: 50%;
+}
+
+.imageshowindex{
+    width: 65px !important;
+    height: 65px !important;
+    border-radius: 50%;
+}
+/* #preview-img{
+    width: 360px !important;
+    height: 200px !important;
+
+} */
+/* #img-vid-con{
+    width: 350px !important;
+    height: auto;
+
+} */
+/* like button */
+.like-btn-color{
+  color: #056BE1 !important;
+}
+
+.profile-img-vid-con{
+    width: 100% !important;
+    height: 350px !important;
+}
+.splide__arrow--prev {
+    left: 10px !important;
+}
+.splide__arrow {
+    top: 64% !important;
+  
+}
+.splide__arrow--next {
+    right: 1px !important;
+}
+/* end */
+
+/* notification */
+.notification {
+    color: white;
+    text-decoration: none;
+    padding: 4px 4px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
+  }
+    
+  .notification .badge {
+    position: absolute;
+    top: -10px;
+    right: 3px;
+    padding: 0px 3px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+  }
+/* end */

@@ -1,0 +1,273 @@
+{% extends 'layouts/base.html' %} 
+{% block content %}
+
+<style type="text/css">
+	.image-container{
+		max-width: 250px;
+		height: auto;
+	}
+	.field-heading{
+		color: var(--secondary-text-color);
+	}
+	.icon-container:hover {
+		opacity: 0.3;
+		cursor: pointer;
+	}
+	.friends-icon{
+		color: #4287f5;
+		font-size: 40px;
+	}
+	.person-add-icon{
+		color: #4287f5;
+		font-size: 40px;
+	}
+	.friend-text{
+		font-weight: 500;
+		color: black;
+	}
+	.friends-btn{
+		background-color: #cccccc;
+		border-color: #cccccc;
+		color: #000;
+		font-weight: 500;
+	}
+	.friends-btn:hover {
+		background-color: #bfbfbf;
+		border-color: #bfbfbf;
+	}
+	.dropdown-toggle::after { 
+		content: none; 
+	}
+	.card{
+		border-radius: 12px;
+	}
+	.material-icons{
+		font-size: 30px;
+	}
+	.material-icons:hover{
+		cursor: pointer;
+	}
+	.confirm-friend-request{
+		color: green;
+	}
+	.confirm-friend-request:hover {
+		opacity: 0.3;
+	}
+	.decline-friend-request:hover {
+		opacity: 0.3;
+	}
+	.decline-friend-request{
+		color: red;
+	}
+	.message-btn-text{
+		font-weight: 500;
+	}
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="{{ ASSETS_ROOT }}/css/splide.min.css" rel="stylesheet" />
+  <!-- add loading -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="bg-elements">
+        <div class="bgtop absolute -z-40 top-6 right-2/4"><img src="{{ ASSETS_ROOT }}/img/bg-top.png" alt=""></div>
+        <div class="bgright absolute -z-40 -right-10 top-52"><img src="{{ ASSETS_ROOT }}/img/bg-right.png" alt=""></div>
+        <div class="bgleft absolute -z-40 -left-10 top-96"> <img src="{{ ASSETS_ROOT }}/img/bg-left.png" alt=""></div>
+        <div class="bgbottom absolute  -bottom-10 right-96"><img src="{{ ASSETS_ROOT }}/img/bg-bottom.png" alt=""></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-12">
+        <!-- back -->
+        <div class="ml-12  top-[120px] z-50 ">
+          <a href="index.html" class="btn-md-primary flex bg-white hover:bg-white shadow-3xl">
+            <span class=""><img src="{{ ASSETS_ROOT }}/icons/back-profile.svg" alt=""></span>
+            <p class="text-slate-800 pl-2"> Back</p>
+          </a>
+        </div>
+        <!-- back end-->
+      </div>
+      <div class="col-md-5 col-sm-12">
+        {% if posts %}
+        <div class="splide">
+          <div class="splide__track">
+              <div class="splide__list">
+                  {% for ps in posts %}
+                    <div class="splide__slide m-2 slider-{{ps.id}}">
+                        <div class="">
+                          
+                            <div class="card" style="padding: 10% 10%;">
+                              <div class="row">
+                                <div class="header flex justify-between mb-4">
+                                  <div class="flex items-center justify-center space-x-2">
+                                    <a href="#"><img class="cursor-pointer profile_img" src=" /static/assets/img/profile-pic.png " alt=""></a>
+                                    <div>
+                                      <a class="text-base font-bold cursor-pointer ">{{ps.user.username.title}}</a>
+                                      <div class="flex space-x-3 opacity-70">
+                                        <div class="flex space-x-1">
+                                          <img src="/static/assets/icons/views.svg" alt="">
+                                          <p>1,5K</p>
+                                        </div>
+                                        <div class="flex space-x-1">
+                                          <img src="/static/assets/icons/comments.svg" alt="">
+                                          <p>217</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="flex flex-col items-center">
+                                    <button class="btn" id="reactionBtn" type="button" onclick="reactionPost({{ps.user.id}},{{ps.id}})"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
+                                    <p class="text-sm text-slate-700">{{ps.likes_count}}</p>
+                                  </div>
+                      
+                                </div>
+                              </div>
+                              <div class="row">
+                                <h5 style="color: black"><span class="text-center">{{ps.caption}}</span></h5>
+                              </div>
+                               <!-- Videos -->
+                              
+                              <div class="row">
+                                  {% if ps.upload_file %}
+                                    <video  class="profile-img-vid-con" controls>
+                                      <source  src="{{ps.upload_file.url}}" type="video/mp4">
+                                    </video>
+                                  {% endif %}
+                                  {% if ps.upload_img_file %}
+                                      <img class="profile-img-vid-con" src=" {{ps.upload_img_file.url}}" type=" ">
+                                  {% endif %}
+                                <!-- Videos End -->
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+               
+              </div>
+          </div>
+        </div>
+      {% endif %}
+      </div>
+      <div class="col-md-4 col-sm-12">
+        <div class="bg-white w-80 rounded-lg p-6  space-y-8 shadow-3xl mr-12  top-[120px] right-0 ">
+            <div class="flex border-b border-slate-200 pb-4 items-center">
+              <div class="mr-3">
+                <img src=" /static/assets/img/profile-pic.png " class="flex-none w-auto profile_img" alt="">
+              </div>
+              <div class="">
+                <p class="text-base font-bold">{{user.username.title}}</p>
+                <p class="text-base text-slate-600">{% if user.profile.address %}{{user.profile.address}}{% endif %}</p>
+              </div>
+
+            </div>
+              <button type="submit" id="loginButton" class="btn-md-primary w-small">Follow</button>
+      
+            <div class="flex ">
+              <div class="flex items-center">
+                <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                  <img src="/static/assets/icons/friends.svg" alt="">
+                </div>
+                <div class=" w-24 ">
+                  <p class="font-normal text-sm text-slate-500">Friends</p>
+                  <p class="font-bold text-base font-roboto"> 5,3K</p>
+                </div>
+              </div>
+        
+              <div class="flex items-center">
+                <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                  <img src="/static/assets/icons/views.svg" alt="">
+                </div>
+                <div class=" ">
+                  <p class="font-normal text-sm text-slate-500">Views</p>
+                  <p class="font-bold text-base font-roboto"> 7,2K</p>
+                </div>
+              </div>
+            </div>
+      
+            <div class="flex ">
+              <div class="flex items-center">
+                <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                  <img src="/static/assets/icons/comments.svg" alt="">
+                </div>
+                <div class="w-24 ">
+                  <p class="font-normal text-sm text-slate-500">Comments</p>
+                  <p class="font-bold text-base font-roboto"> 741K</p>
+                </div>
+              </div>
+        
+              <div class="flex items-center">
+                <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                  <img src="/static/assets/icons/reactions.svg" alt="">
+                </div>
+                <div class=" ">
+                  <p class="font-normal text-sm text-slate-500">Reactions</p>
+                  <p class="font-bold text-base font-roboto"> 10,8K</p>
+                </div>
+              </div>
+            </div>
+      
+            <div class="pt-4 flex space-x-4">
+              <a href="/chat" class="btn-sm-primary w-full">Send Message </a>
+                {% if is_self %}
+                   <a href="{% url 'edit_profile' id=user.id %}" class="btn btn-sm-primary w-full">Edit profile</a>
+                {% else %}
+                   {% if rqst_status == False %}
+                        <button type="button" onclick="sendRequest({{user.id}}, 'cancel_request')" class="btn btn-sm-primary w-full">Cancel request</button>
+                    {% else %}
+                        <button type="button" onclick="sendRequest({{user.id}}, 'add_request')" class="btn btn-sm-primary w-full">Add Friend</button>
+                    {% endif %}
+                {% endif %}
+              
+            </div>
+            <div class="row">
+                <p class="display_msg"></p>
+            </div>
+          </div>
+        
+      </div>
+    </div>
+ 
+</div>
+      
+<!-- Profile End -->
+
+<script src="{{ ASSETS_ROOT }}/js/splide.min.js"></script>
+<script>
+    var splide = new Splide('.splide', {
+        type: 'loop',
+        perPage: 1,
+        rewind: true,
+    });
+
+    splide.mount();
+
+// send request
+function sendRequest(id, status){
+    URL = "{% url 'add_friend_request' %}"
+    fetch(URL, {
+        method: 'POST',
+        headers:{
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': '{{ csrf_token }}',
+    },
+        body: JSON.stringify({'id':parseInt(id),'status':status}) 
+    })
+    .then(response => {
+
+        return response.json() //Convert response to JSON
+    })
+    .then(data => {
+        setTimeout(() => {
+        $('.display_msg').text(data.message)
+        location.reload()
+    }, 2000)
+        
+})
+}
+// end
+
+</script>
+  
+{% endblock %}
+

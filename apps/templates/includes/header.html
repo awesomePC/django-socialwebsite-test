@@ -1,0 +1,1007 @@
+<!-- sidebar-menu -->
+<div id="sideBar" class="hidden">
+  <!-- <h1>{{user}}</h1> -->
+  <h6 style="display: none;" id = "sign">{{sign}}</h6>
+  {% if user.is_authenticated %}
+  <!-- Mobile  sidebar loggedin  -->
+  <div class="fixed w-full h-full bg-overlay top-0 left-0 z-50 ">
+    <div class="w-80 float-right h-full bg-white block p-6">
+      <div class="flex justify-between">
+        <div><img src="{{ ASSETS_ROOT }}/img/logo.svg" alt=""></div>
+        <div id="closeSidebar" class="cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-sidebar.svg" alt=""></div>
+      </div>
+      <div class="flex flex-col space-y-4 mt-8">
+
+        <div>
+          <button id="side_upload"  class="btn-sm-primary w-full flex justify-center items-center ">
+            <img src="{{ ASSETS_ROOT }}/icons/upload.svg" class="mr-2 " alt="">
+            <span>Upload</span>
+          </button>
+        </div>
+        <div>
+          <button id="side_logout" class="btn-secendary-sm-border h-10 w-full flex justify-center items-center ">
+            <span>Log Out</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <!-- Mobile  sidebar loggedOut  -->
+  <div id="inOut" class="fixed w-full h-full bg-overlay top-0 left-0 z-50">
+    <div class="w-80 float-right h-full bg-white block p-6">
+      <div class="flex justify-between">
+        <div><img src="{{ ASSETS_ROOT }}/img/logo.svg" alt=""></div>
+        <div id="closeSidebar" class="cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-sidebar.svg" alt=""></div>
+      </div>
+      <div class="flex flex-col space-y-4 mt-8">
+
+        <div>
+          <button id="side_signup" class="btn-sm-primary h-10 w-full flex justify-center items-center ">
+            <span>Sign Up</span>
+          </button>
+        </div>
+        <div>
+          <button id="side_login" class="btn-secendary-sm-border h-10 w-full flex justify-center items-center ">
+            <span>Log In</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+<!-- overlay -->
+<div>
+  <!-- Login  -->
+  <div id="loginID" class="bg-slate-400/50 fixed w-full h-full z-50 hidden">
+    <div class="bg-white w-auto sm:w-[500px] mx-auto mt-16 pt-8 pb-10 px-10 shadow-3xl rounded-lg">
+      <form role="form" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="space-y-8">
+            <div class="flex items-center justify-between">
+              <h1 class="font-bold text-2xl">Login</h1>
+              <span id="close-login-modal" class="cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-modal.svg" alt=""></span>
+            </div>
+            <div class="space-y-4">
+              <div class="flex flex-col">
+                <label class="blabel" for=""> Email</label>
+                <input class="binput" type="text" placeholder="Email " name="email">
+              </div>
+              <div class="flex flex-col">
+                <label class="blabel" for=""> Password</label>
+                <input class="binput" type="password" placeholder="Password" name="password">
+                <a id="forgotPassword" class="pt-3 text-primary" href="#">Forgot password?</a> 
+              </div>
+            </div>
+            <button id="loginButton" type="submit" class="btn-md-primary w-full">Login</button>
+            <p>Don’t have an account yet? <a id="login-signup" class="text-primary" href="#">Create account</a> 
+            </p>
+            <div class="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl">
+              <p class="mb-0"><span>{{ form.non_field_errors}}</span></p>
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+  <!-- Login End -->
+
+  <!-- Create Account  -->
+  <div id="CreateID" class="bg-slate-400/50 fixed w-full h-full z-50 hidden">
+    <div class="bg-white w-auto sm:w-[500px] mx-auto mt-16 pt-8 pb-10 px-10 shadow-3xl rounded-lg">
+      <form role="form" method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        <div class="space-y-8">
+          <div class="flex items-center justify-between">
+            <h1 class="font-bold text-2xl">Create an account</h1>
+            <span id="close-signup-modal" class=" cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-modal.svg" alt=""></span>
+          </div>
+          <div class="space-y-4">
+            <div class="flex flex-col">
+              <label class="blabel" for=""> Username</label>
+              <input class="binput" type="text" placeholder=" " name="username">
+            </div>
+            {% for error in form.username.errors %}
+            <span class="text-color-red" style="color:red;">{{ error }}</span>
+            {% endfor %}
+            <div class="flex flex-col">
+              <label class="blabel" for=""> Email</label>
+              <input class="binput" type="text" placeholder=" " name="email">
+            </div>
+            {% for error in form.email.errors %}
+            <span class="text-color-red" style="color:red;">{{ error }}</span>
+            {% endfor %}
+            <div class="flex flex-col">
+              <label class="blabel" for=""> Password</label>
+              <input class="binput" type="password" placeholder=" " name="password1">
+            </div>
+            {% for error in form.password1.errors %}
+            <span class="text-color-red" style="color:red;">{{ error }}</span>
+            {% endfor %}
+            <div class="flex flex-col">
+              <label class="blabel" for=""> Password confirm</label>
+              <input class="binput" type="password" placeholder=" " name="password2">
+            </div>
+            {% for error in form.password2.errors %}
+            <span class="text-color-red" style="color:red;">{{ error }}</span>
+            {% endfor %}
+            <div class="flex form-check">
+              <input class="bcheckbox" type="checkbox">
+              <label class="blabel ml-3" for=""> I agree to the <a class="underline font-medium" href="#">Terms and Conditions</a>  </label>
+            </div>
+          </div>
+
+
+          <!-- {% csrf_token %}
+          {% for field in form %}
+          <div class="form-group">
+              {{ field }}
+          </div>
+          {% endfor %} -->
+          <div class="form-group">
+              <input type="submit" name="submit" id="submit" class="form-submit" value="Sign up"/>
+          </div>
+
+          <button id="signupButton" type="submit" class="btn-md-primary w-full">Create Account</button>
+          <p>Already have an account yet?  <a id="signup-login" class="text-primary font-bold" href="#">Log In</a> 
+        </p>
+        </div>
+       </form>
+    </div>
+  </div>
+  <!-- Create Account End -->
+
+  <!-- Reset password  -->
+  <div id="reset-password" class="bg-slate-400/50 fixed w-full h-full z-50 hidden">
+    <div class="bg-white w-auto sm:w-[500px] mx-auto mt-16 pt-8 pb-10 px-10 shadow-3xl rounded-lg">
+      <div class="space-y-8">
+        <div class="flex items-start justify-between">
+          <div>
+            <h1 class="font-bold text-2xl">Reset password</h1>
+            <p class="text-sm text-slate-600 w-3/4 pt-4">Enter your email address and we will send you password reset instructions.</p>
+          </div>
+          <span id="close-reset-password-modal" class="cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-modal.svg" alt=""></span>
+        </div>
+        <div class="space-y-4">
+          <div class="flex flex-col">
+            <label class="blabel" for=""> Email</label>
+            <input class="binput" type="text" placeholder=" ">
+          </div>
+        </div>
+        <button id="resetButtonLast" class="btn-md-primary w-full">Reset</button>
+        <p class="text-slate-600">Remember the password? <a id="reset-login" class="text-primary font-bold" href="#">Log In</a> 
+      </p></div>
+    </div>
+  </div>
+  <!--  Reset password End -->
+
+  <!-- Reset password success  -->
+  <div id="resetPass2" class="bg-slate-400/50 fixed w-full h-full z-50 hidden ">
+    <div class="bg-white w-auto sm:w-[500px] mx-auto mt-16 pt-8 pb-10 px-10 shadow-3xl rounded-lg">
+      <div class="space-y-8">
+        <div class="flex items-start justify-between">
+          <div>
+            <h1 class="font-bold text-2xl">Reset password</h1>
+            <p class="text-sm text-slate-600 pt-4">Create a new password</p>
+          </div>
+          <span id="closeReset2" class="cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-modal.svg" alt=""></span>
+        </div>
+        <div class="space-y-4">
+          <div class="flex flex-col">
+            <label class="blabel" for=""> New password</label>
+            <input class="binput" type="password" placeholder=" ">
+          </div>
+
+          <div class="flex flex-col">
+            <label class="blabel" for=""> Confirm New password</label>
+            <input class="binput" type="password" placeholder=" ">
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <p class="text-slate-600 text-sm">Passwords must match</p>
+            <p class="text-slate-600 text-sm">The password must contain at least one number</p>
+            <p class="text-slate-600 text-sm">The minimum password length is 6 symbols</p>
+
+          </div>
+
+        </div>
+        <button class="btn-md-primary w-full">Reset password</button>
+        <p class="text-slate-600">Remember the password? <a class="text-primary font-bold" href="#">Log In</a> 
+      </p></div>
+    </div>
+  </div>
+  <!--  Reset password success End -->
+
+  <!-- Upload Videos -->
+  <div id="uploadVideos" class="bg-slate-400/50 fixed w-full h-full z-50 hidden ">
+    <div class="bg-white w-auto sm:w-[500px] mx-auto mt-16 pt-8 pb-10 px-10 shadow-3xl rounded-lg">
+      <div class="space-y-8">
+        <div class="flex items-start justify-between">
+          <div>
+            <h1 class="font-bold text-2xl">Upload</h1>
+          </div>
+          <span id="close-upload-modal" class=" cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-modal.svg" alt=""></span>
+        </div>
+        <div class="space-y-4">
+          <div class="flex flex-col  pb-6">
+            <img src="{{ ASSETS_ROOT }}/img/upload-graph.svg" class="w-72 mx-auto" alt="" data-xblocker="passed" style="visibility: visible;">
+          </div>
+
+          <div class="flex flex-col border-2 border-slate-300 rounded-lg border-dashed py-6 px-12 space-y-4">
+            <p class="mx-auto text-center">Drag your photos or videos here to start uploading.</p>
+            <button type="file" class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600">Browse files</button>
+          </div>
+
+          <div class="flex space-y-1 items-center justify-between bg-slate-100 p-2 rounded-lg px-4 ">
+            <div class="flex">
+              <div><img src="{{ ASSETS_ROOT }}/icons/play-icon.svg" class="w-12" alt=""></div>
+              <div class="ml-2">
+                <p>Video.MP4</p>
+                <p class="text-sm text-slate-400">5 MB</p>
+              </div>
+            </div>
+
+            <div><img class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/delete-video.svg" alt=""></div>
+
+          </div>
+
+        </div>
+        <button type="button" class="closeUploader btn-md-primary w-full">Upload</button>
+      </div>
+    </div>
+  </div>
+  <!--  Upload Videos End -->
+</div>
+<!-- end overlay -->
+<!-- ==========main-menu=============== -->
+<div class="mx-auto bg-white main-header">
+  
+  {% if user.is_authenticated %}
+  <!-- Loggedin -->
+  <nav id="navin" class="flex items-center h-auto lg:h-14 justify-between mx-6 py-2 lg:mx-12 lg:py-4 z-10">
+    <div class="leftSide flex justify-center items-center">
+
+      <div class="logo mr-3 md:mr-10  lg:block">
+        <!-- <a  href="/" >
+          <img class="cursor-pointer" src="{{ ASSETS_ROOT }}/img/logo.svg" alt="">
+        </a> -->
+        <a href="">
+          <img class="cursor-pointer " src="{% if ps.user.profile.image %} {{ps.user.profile.image.url}} {% else %} /static/assets/img/profile-pic.png {% endif %}"
+          alt="">
+        </a>
+      </div>
+      <!-- <div class="searchBar relative  rightSide flex items-center space-x-5 md:space-x-8 " x-data="{ open: false }">
+
+        <input type="search" @click="open = true" id="txtSearch" name="txtSearch" class=" pl-4 sm:pl-9 w-25 md:w-ful text-base text-slate-900 bg-transparent 
+          rounded-lg border border-slate-300 focus:ring-0 focus:border-primary" placeholder="Search..." required>
+      </div>   -->
+      <!-- search bar  -->
+      <div class="searchBar relative  " x-data="{ open: false }">
+        <div class="sm:flex absolute inset-y-0 left-0 items-center pl-2   pointer-events-none hidden">
+          <img src="{{ ASSETS_ROOT }}/icons/search.svg" alt="">
+        </div>
+
+        <div @click.away="open = false"> 
+          <input type="search" @click="open = true" class=" pl-4 sm:pl-9 w-24 md:w-full text-base text-slate-900 bg-transparent 
+          rounded-lg border border-slate-300 focus:ring-0 focus:border-primary
+          " placeholder="Search" required="">
+
+          <!-- Search List -->
+          <div class=" bg-white shadow-3xl absolute z-50 top-14 rounded-lg w-72 left-0" x-show="open" style="display: none;">
+            <ul class="">
+              <li class="px-4 py-3 hover:bg-slate-100">
+                <a href="#" class="flex items-center">
+                  <img src="{{ ASSETS_ROOT }}/img/search-img.png" class="w-auto h-auto" alt="">
+                  <div class="ml-3">
+                    <div class="text-base font-medium">JordanVanga</div>
+                    <div class="text-sm text-slate-600">100K followers</div>
+                  </div>
+                </a>
+              </li>
+              <li class="px-4 py-3 hover:bg-slate-100">
+                <a href="#" class="flex items-center">
+                  <img src="{{ ASSETS_ROOT }}/img/search-img4.png" class="w-auto h-auto" alt="">
+                  <div class="ml-3">
+                    <div class="text-base font-medium">Kingsley Walters</div>
+                    <div class="text-sm text-slate-600">2.5K followers</div>
+                  </div>
+                </a>
+              </li>
+              <li class="px-4 py-3 hover:bg-slate-100">
+                <a href="#" class="flex items-center">
+                  <img src="{{ ASSETS_ROOT }}/img/search-img2.png" class="w-auto h-auto" alt="">
+                  <div class="ml-3">
+                    <div class="text-base font-medium">Ned Donovan</div>
+                    <div class="text-sm text-slate-600">502 followers</div>
+                  </div>
+                </a>
+              </li>
+              <li class="px-4 py-3 hover:bg-slate-100">
+                <a href="#" class="flex items-center">
+                  <img src="{{ ASSETS_ROOT }}/img/search-img3.png" class="w-auto h-auto" alt="">
+                  <div class="ml-3">
+                    <div class="text-base font-medium">Jimi Robertson</div>
+                    <div class="text-sm text-slate-600">1K followers</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- end search bar -->
+    </div>
+    
+    <div class="rightSide flex items-center space-x-5 md:space-x-8 ">
+      <div class="relative notification" x-data="{ open: false }">
+        <span class="badge">3</span>
+        <div class="">
+          <img @click="open = true" class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/notification.svg" alt="">
+        </div>
+        
+        <!-- Notification List -->
+        {% include "home/show_notifications.html" %}
+      </div>
+      <!-- Chat  -->
+      <div class="relative" x-data="{ open: false}">
+        <div class="cursor-pointer">
+          <img @click="open = true" src="{{ ASSETS_ROOT }}/icons/chat.svg" alt="">
+        </div>
+
+        <div x-cloak @click.away="open = false"
+          class=" bg-white shadow-3xl absolute z-50 top-10 rounded-lg -right-16 lg:-right-44 " x-show="open"
+          x-data="{ inner: false }">
+          <ul class="pt-2 pb-4">
+            <li class="px-4 py-3 hover:bg-slate-100">
+              <a href="#" class="flex items-center">
+                <div class="relative ">
+                  <img src="{{ ASSETS_ROOT }}/img/noti-1.png" class="w-auto h-auto" alt="">
+                  <span
+                    class="w-3 h-3 block border-2  border-white absolute bottom-0 -right-1 bg-green rounded-full"></span>
+                </div>
+
+                <div class="ml-4 w-80 " @click="inner = true">
+                  <div class="flex justify-between">
+                    <p class=" flex">
+                      <span class="mr-2 text-base font-medium">Areeb Lott</span>
+                      <span
+                        class="w-5 h-5 items-center justify-center flex text-white text-sm bg-primary rounded-full">2</span>
+                    </p>
+                    <span class="text-sm text-slate-400">09:30 AM</span>
+                  </div>
+                  <span class="text-base text-slate-900 font-normal">How was your day?</span>
+                  <span></span>
+                </div>
+              </a>
+            </li>
+            <li class="px-4 py-3 hover:bg-slate-100">
+              <a href="#" class="flex items-center">
+                <div class="relative ">
+                  <img src="{{ ASSETS_ROOT }}/img/noti-1.png" class="w-auto h-auto" alt="">
+                  <span
+                    class="w-3 h-3 block border-2  border-white absolute bottom-0 -right-1 bg-green rounded-full"></span>
+                </div>
+
+                <div class="ml-4 w-80 " @click="inner = true">
+                  <div class="flex justify-between">
+                    <p class=" flex">
+                      <span class="mr-2 text-base font-medium">Rianne Brock</span>
+                      <span
+                        class="w-5 h-5 items-center justify-center flex text-white text-sm bg-primary rounded-full">1</span>
+                    </p>
+                    <span class="text-sm text-slate-400">09:30 AM</span>
+                  </div>
+                  <span class="text-base font-normal text-slate-900 ">Going out tonight?</span>
+                  <span></span>
+                </div>
+              </a>
+            </li>
+            <li class="px-4 py-3 hover:bg-slate-100">
+              <a href="#" class="flex items-center">
+                <div class="relative ">
+                  <img src="{{ ASSETS_ROOT }}/img/noti-1.png" class="w-auto h-auto" alt="">
+                  <span
+                    class="w-3 h-3 block border-2  border-white absolute bottom-0 -right-1 bg-slate-300 rounded-full"></span>
+                </div>
+
+                <div class="ml-4 w-80 " @click="inner = true">
+                  <div class="flex justify-between">
+                    <p class=" flex">
+                      <span class="mr-2 text-base font-medium">Ehsan Parks</span>
+                      <!-- <span class="w-5 h-5 items-center justify-center flex text-white bg-primary rounded-full">2</span> -->
+                    </p>
+                    <span class="text-sm text-slate-400">Sun</span>
+                  </div>
+                  <span class="text-base text-slate-600 font-light">Okay, give me a minute</span>
+                  <span></span>
+                </div>
+              </a>
+            </li>
+            <li class="px-4 py-3 hover:bg-slate-100">
+              <a href="#" class="flex items-center">
+                <div class="relative ">
+                  <img src="{{ ASSETS_ROOT }}/img/noti-1.png" class="w-auto h-auto" alt="">
+                  <span
+                    class="w-3 h-3 block border-2 border-white absolute bottom-0 -right-1 bg-slate-300 rounded-full"></span>
+                </div>
+
+                <div class="ml-4 w-80 " @click="inner = true">
+                  <div class="flex justify-between">
+                    <p class=" flex">
+                      <span class="mr-2 text-base font-medium">Ehsan Parks</span>
+                      <!-- <span class="w-5 h-5 items-center justify-center flex text-white bg-primary rounded-full">2</span> -->
+                    </p>
+                    <span class="text-sm text-slate-400">Sat</span>
+                  </div>
+                  <span class="text-base text-slate-600 font-light">Here is my Instagram</span>
+                  <span></span>
+                </div>
+              </a>
+            </li>
+          </ul>
+
+          <div>
+            <div x-show="inner" class="absolute top-0 w-full bg-white">
+
+              <div class="chatRow">
+
+                <div class="flex justify-between items-center bg-slate-40 px-4 py-3 rounded-lg ">
+                  <img src="{{ ASSETS_ROOT }}/icons/back.svg" @click="inner = false" class="cursor-pointer" alt="">
+                  <div class="flex items-center ">
+                    <span class="w-3 h-3 block border-2  border-white  bg-green rounded-full"></span>
+                    <p class="pl-2"> Online</p>
+                  </div>
+                </div>
+                <div class="flex items-start bg-slate-100 px-4 py-6">
+
+                  <div>
+                    <img src="{{ ASSETS_ROOT }}/img/Chat-head.png" class="w-auto h-auto" alt="">
+                  </div>
+                  <div class="pl-3">
+                    <p class="font-medium pb-2">JordanVanga <span class="text-slate-400 pl-2 text-sm">2 hours
+                        ago</span></p>
+                    <p class="text-base"> Hey, did you check the new
+                      feature? </p>
+                  </div>
+
+                </div>
+
+
+              </div>
+
+              <div class="chatRow">
+
+                <div class="flex items-start  px-4 py-6">
+                  <div>
+                    <img src="{{ ASSETS_ROOT }}/img/you.png" class="w-auto h-auto" alt="">
+                  </div>
+                  <div class="pl-3">
+                    <p class="font-medium pb-2">You <span class="text-slate-400 pl-2 text-sm">2 hours ago</span></p>
+                    <p class="text-base"> Yeah, I love it ♥️ </p>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="chatRow">
+
+                <div class="flex items-start bg-slate-100 px-4 py-6">
+                  <div class="flex-none">
+                    <img src="{{ ASSETS_ROOT }}/img/Chat-head.png" class="w-auto h-auto " alt="">
+                  </div>
+                  <div class="pl-3">
+                    <p class="font-medium pb-2 w-fit">JordanVanga <span class="text-slate-400 pl-2 text-sm ">2 hours
+                        ago</span></p>
+                    <p class="text-base"> I look forward for what’s coming next. Can't wait 😃 </p>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="chatRow">
+
+                <div class="flex items-start p-6 rounded-lg">
+                  <input type="text" placeholder="Ae" class="bg-slate-100 rounded-full border-none w-full h-11
+                      mr-2 focus:ring-primary pl-6 ">
+                  <img src="{{ ASSETS_ROOT }}/icons/send.svg" class="w-auto h-auto cursor-pointer" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="rightSide flex items-center space-x-8">
+        <button id="login" class="ml-2 text-primary font-medium text-base lg:flex items-center hidden "> <span style="color:#E2477C;">Log In</span> </button>
+        <button id="signup" class="btn-sm-primary lg:flex hidden "><span>Sign Up</span></button> -->
+        
+        <!-- href="" -->
+      <a  id="upload-main-header" class="btn-sm-primary lg:flex items-center hidden px-3 ">
+        <img src="{{ ASSETS_ROOT }}/icons/upload.svg" class="mr-2 " alt="">
+        <span>Upload</span>
+      </a>
+      <!-- <div class="profilePic lg:flex ">
+        <a href=""><img class="cursor-pointer " src="{% if ps.user.profile.image %} {{ps.user.profile.image.url}} {% else %} /static/assets/img/profile-pic.png {% endif %}"
+            alt=""></a>
+      </div> -->
+      <div class="logout lg:flex hidden">
+        <a href="{% url 'logout' %}" id="logout" class="ml-2 text-primary font-medium text-lg flex items-center">
+          <!-- <img src="{{ ASSETS_ROOT }}/icons/logout.svg" class="mr-2 " alt=""> -->
+          <span>Logout</span>
+        </a>
+      </div>
+      <div id="hamTrigger" class="cursor-pointer block lg:hidden"><img src="{{ ASSETS_ROOT }}/icons/ham-menu.svg" alt=""></div>
+    </div>
+  </nav>
+
+  {% else %}
+  <!-- LoggedOut -->
+  <nav id="navout" class="flex items-center h-auto lg:h-14 justify-between mx-6 py-4 lg:mx-12 lg:py-4 z-10">
+    <div class="leftSide flex justify-center items-center">
+      <div class="logo mr-3 md:mr-10  lg:block">
+        <a  href="/" >
+          <img class="cursor-pointer" src="{{ ASSETS_ROOT }}/img/logo.svg" alt="">
+        </a>
+      </div> 
+    </div>
+
+    <div class="rightSide flex items-center space-x-8">
+      <button id="login" class="ml-2 text-primary font-medium text-base lg:flex items-center hidden "> 
+        <span style="color:#E2477C;">Log In</span>
+       </button>
+      <button id="signup" class="btn-sm-primary lg:flex hidden "><span>Sign Up</span></button>
+      <div id="hamTrigger" class="cursor-pointer block lg:hidden"><img src="{{ ASSETS_ROOT }}/icons/ham-menu.svg" alt=""></div>
+    </div>
+  </nav>
+  {% endif %}
+</div>
+<br>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+  $(document).ready(function() {
+  
+      $(".nav-btn").click(function() {
+          $("#hide-nav-section").toggleClass("display-block");
+      });
+      // main-header
+      $("#hamTrigger").click(function() {
+        $("#sideBar").removeClass("hidden");
+      });
+
+      $("#closeSidebar").click(function() {
+        $("#sideBar").addClass("hidden");
+      });
+
+      $("#signup").click(function() {
+        $("#CreateID").removeClass("hidden");
+        $("#loginID").addClass("hidden");
+      });
+
+      $("#login").click(function() {
+        $("#loginID").removeClass("hidden");
+        $("#CreateID").addClass("hidden");
+      });
+
+      $("#upload-main-header").click(function() {
+        $("#uploadVideos").removeClass("hidden");
+      });
+      // end main-header
+      
+      //inside modals
+      $("#close-login-modal").click(function() {
+        $("#loginID").addClass("hidden");
+      });
+
+      $("#close-signup-modal").click(function() {
+        $("#CreateID").addClass("hidden");
+      });
+
+      $("#close-upload-modal").click(function() {
+        $("#uploadVideos").addClass("hidden");
+      });
+
+      $("#login-signup").click(function() {
+        $("#CreateID").removeClass("hidden");
+        $("#loginID").addClass("hidden");
+      });
+
+      $("#signup-login").click(function() {
+        $("#loginID").removeClass("hidden");
+        $("#CreateID").addClass("hidden");
+      });
+
+      $("#forgotPassword").click(function() {
+        $("#loginID").addClass("hidden");
+        $("#reset-password").removeClass("hidden");
+      });
+
+      $("#close-reset-password-modal").click(function() {
+        $("#reset-password").addClass("hidden");
+      });
+
+      $("#reset-login").click(function() {
+        $("#loginID").removeClass("hidden");
+        $("#reset-password").addClass("hidden");
+      });
+
+      $("#close-upload-modal").click(function() {
+        $("#uploadVideos").addClass("hidden");
+      });
+      // end inside modals
+    
+      // side-menu
+      $("#side_signup").click(function() {
+        $("#CreateID").removeClass("hidden");
+        $("#sideBar").addClass("hidden");
+      });
+
+      $("#side_login").click(function() {
+        $("#loginID").removeClass("hidden");
+        $("#sideBar").addClass("hidden");
+      });
+
+      $("#side_upload").click(function() {
+        $("#uploadVideos").removeClass("hidden");
+        $("#sideBar").addClass("hidden");
+      });
+
+
+      // end side-menu
+      if($('#sign').text() == '2')
+      {
+        $("#CreateID").removeClass("hidden");
+        
+      } else if($('#sign').text() == '1') {
+        $("#loginID").removeClass("hidden");
+      }
+      ///login&signup result
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      document.getElementById("loginButton").addEventListener("click", toggleNav);
+      function toggleNav() {
+      
+          var loggedOut = document.getElementById("navout");
+          if (loggedOut.classList.contains("flex")) {
+            loggedOut.classList.add("hidden");
+            document.getElementById("navin").style.display = "flex";
+            showLogin.classList.add("hidden");
+            document.getElementById("inOut").classList.add("hidden");
+          }
+      }
+      
+      document.getElementById("signupButton").addEventListener("click", zignupButton);
+      function zignupButton() {
+        var loggedOut = document.getElementById("navout");
+      
+            loggedOut.classList.add("hidden");
+            document.getElementById("navin").style.display = "flex";
+            showSignup.classList.add("hidden");
+      
+      }
+      
+      
+      
+      
+      
+      document.getElementById("video1").addEventListener("click", playPause);
+      var myVideo = document.getElementById("video1"); 
+      
+      function playPause() { 
+        if (myVideo.paused) 
+          myVideo.play(); 
+        else 
+          myVideo.pause(); 
+      } 
+      
+      document.getElementById("video2").addEventListener("click", playPause2);
+      var myVideo2 = document.getElementById("video2"); 
+      
+      function playPause2() { 
+        if (myVideo2.paused) 
+          myVideo2.play(); 
+        else 
+          myVideo2.pause(); 
+      } 
+      
+      document.getElementById("login").addEventListener("click", showLogin);
+      var showLogin = document.getElementById("loginID"); 
+      
+      function showLogin() { 
+        if (showLogin.classList.contains("hidden")) {
+            showLogin.classList.remove("hidden");
+            sideBar.classList.add("hidden");
+      
+            
+          }
+      } 
+      
+      document.getElementById("login2").addEventListener("click", showLogin2);
+      var showLogin = document.getElementById("loginID"); 
+      
+      function showLogin2() { 
+        if (showLogin.classList.contains("hidden")) {
+            showLogin.classList.remove("hidden");
+            sideBar.classList.add("hidden");
+      
+          }
+      } 
+      
+      document.getElementById("uploadButton").addEventListener("click", showUploader);
+      var uploadModal = document.getElementById("uploadVideos"); 
+      
+      function showUploader() { 
+        if (uploadModal.classList.contains("hidden")) {
+            uploadModal.classList.remove("hidden");
+          }
+      } 
+      
+      
+      document.getElementById("uploadButton2").addEventListener("click", showUploader2);
+      var uploadModal = document.getElementById("uploadVideos"); 
+      
+      function showUploader2() { 
+        if (uploadModal.classList.contains("hidden")) {
+            uploadModal.classList.remove("hidden");
+          }
+      } 
+      
+      
+      
+      document.querySelector(".close-modal").addEventListener("click", closeLogin);
+      document.getElementById("close-modal2").addEventListener("click", closeSignup);
+      document.getElementById("closeUploader").addEventListener("click", closeUploader);
+      document.getElementById("closeReset").addEventListener("click", closeResetModal);
+      document.getElementById("closeReset2").addEventListener("click", closeResetModal2);
+      
+      var closeLogin = document.getElementById("loginID"); 
+      var closeSignup = document.getElementById("CreateID"); 
+      var closeUploader = document.getElementById("uploadVideos"); 
+      var resetPass = document.getElementById("resetPass"); 
+      var resetPass2 = document.getElementById("resetPass2"); 
+      
+      
+      function closeLogin() { 
+        if (closeLogin.classList.contains("fixed")) {
+            closeLogin.classList.add("hidden");
+            
+          }
+      } 
+      function closeSignup() { 
+        if (closeSignup.classList.contains("fixed")) {
+            closeSignup.classList.add("hidden");
+      
+          }
+      } 
+      
+      function closeUploader() { 
+        if (closeUploader.classList.contains("fixed")) {
+            closeUploader.classList.add("hidden");
+      
+          }
+      
+      }
+      
+      function closeResetModal() { 
+        if (resetPass.classList.contains("fixed")) {
+            resetPass.classList.add("hidden");
+      
+          }
+      
+      }
+      
+      function closeResetModal2() { 
+        if (resetPass2.classList.contains("fixed")) {
+            resetPass2.classList.add("hidden");
+      
+          }
+      
+      }
+      
+      
+      
+      
+      
+      document.getElementById("forgotPassword").addEventListener("click", showReset);
+      
+      var closeLogin = document.getElementById("loginID"); 
+      var resetModal = document.getElementById("resetPass"); 
+      
+      
+      function showReset() { 
+        if (closeLogin.classList.contains("fixed")) {
+            closeLogin.classList.add("hidden");
+            resetModal.classList.remove("hidden");
+          }
+      } 
+      
+      document.getElementById("resetButtonLast").addEventListener("click", showReset2);
+      
+      var closeLogin = document.getElementById("loginID"); 
+      var closeResetModal = document.getElementById("resetPass"); 
+      var resetModal2 = document.getElementById("resetPass2"); 
+      
+      
+      function showReset2() { 
+        if (closeLogin.classList.contains("fixed")) {
+            closeLogin.classList.add("hidden");
+            closeResetModal.classList.add("hidden");
+            resetModal2.classList.remove("hidden");
+          }
+      } 
+      
+      
+      
+      
+      
+      document.querySelector("#signup").addEventListener("click", showSignup);
+      var showSignup = document.getElementById("CreateID"); 
+      
+      function showSignup() { 
+        if (showSignup.classList.contains("hidden")) {
+            showSignup.classList.remove("hidden");
+            sideBar.classList.add("hidden");
+          }
+      } 
+      
+      document.querySelector("#signup2").addEventListener("click", showSignup2);
+      var showSignup = document.getElementById("CreateID"); 
+      
+      function showSignup2() { 
+        if (showSignup.classList.contains("hidden")) {
+            showSignup.classList.remove("hidden");
+            sideBar.classList.add("hidden");
+      
+          }
+      } 
+      
+      
+      
+      document.getElementById("openComments").addEventListener("click", showComments);
+      
+      var userComments = document.getElementById("userComments"); 
+      var hideParrent = document.getElementById("hideParrent");
+      var openBtn = document.getElementById("openComments");
+      var commentsParrent = document.getElementById("commentsParrent");
+      
+      function showComments() { 
+      
+        if (userComments.style.top === "710px") {
+          userComments.style.top = "0px";
+          openBtn.style.top = "500px";
+          openBtn.style.zIndex = "0";
+          commentsParrent.style.left = "0";
+          commentsParrent.classList.remove("delay-700");
+        } else {
+          userComments.style.top = "710px";
+      
+        }
+      
+      
+      } 
+      
+      document.getElementById("closeComments").addEventListener("click", closeComments)
+      
+      function closeComments() { 
+      
+        if (userComments.style.top === "0px") {
+          userComments.style.top = "710px";
+          openBtn.style.top = "610px";
+          openBtn.style.zIndex = "50";
+          commentsParrent.style.left = "-400px";
+          commentsParrent.classList.add("delay-700");
+        }
+      
+      } 
+      
+      
+      document.getElementById("nextVideo").addEventListener("click", nextVideo)
+      
+      var scrollVideos = document.getElementById("scrollVideos");
+      
+      function nextVideo() { 
+      
+        if (scrollVideos.style.marginLeft === "-300px") {
+          scrollVideos.style.marginLeft = "0px";
+        }
+      
+      } 
+      
+      
+      document.getElementById("prevVideo").addEventListener("click", prevVideo)
+      
+      var prevVideo = document.getElementById("prevVideo");
+      
+      function prevVideo() { 
+      
+        if (scrollVideos.style.marginLeft === "0px") {
+          scrollVideos.style.marginLeft = "-300px";
+      
+        }
+      
+      } 
+      
+      document.getElementById("logout").addEventListener("click", logoutt);
+      function logoutt() {
+          var loggedOut = document.getElementById("navout");
+          if (loggedOut.classList.contains("flex")) {
+            loggedOut.classList.remove("hidden");
+            document.getElementById("navin").style.display = "none";
+            document.getElementById("inOut").classList.remove("hidden")
+          }
+      }
+      
+      document.getElementById("logout2").addEventListener("click", logout2);
+      function logout2() {
+      
+        var loggedOut = document.getElementById("navout");
+          if (loggedOut.classList.contains("flex")) {
+            loggedOut.classList.remove("hidden");
+            document.getElementById("navin").style.display = "none";
+            document.getElementById("inOut").classList.remove("hidden");
+            document.getElementById("inOut").classList.remove("hidden");
+        sideBar.classList.add("hidden");
+          }
+      
+      
+      
+      }
+  
+
+
+
+
+  });
+</script>
+<!-- <script>
+  $( function() {
+    var projects = [
+        {% for user in users_details %}
+              {{% for key, val in user.items %}
+                '{{ key }}': '{{ val }}',
+              {% endfor %}},
+            {% endfor %}
+    ];
+
+    $( "#txtSearch" ).autocomplete({
+      minLength: 1,
+      source: projects,
+      focus: function( event, ui ) {
+        $( "#txtSearch" ).val( ui.item.username );
+        return false;
+      },
+      select: function( event, ui ) {
+        $( "#txtSearch" ).val( ui.item.username );
+        $( "#project-id" ).val( ui.item.id );
+        console.log("==",ui.item.image)
+        $( "#project-icon" ).attr( "src", "images/" + ui.item.image );
+ 
+        return false;
+      }
+    })
+
+    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+      return $( "<li class='px-4 py-3 hover:bg-slate-100'>")
+        .append(
+          "<a href='/view-user-profile/" + item.id + "' class='flex items-center'>"+"<img src='" + item.image + "' class='w-auto h-auto' />"+
+          "<div class='ml-3'>"+ 
+            "<div class='text-base font-medium'>" + item.username + "</div>" + 
+            "<div class='text-sm text-slate-600'>2.5K followers</div" +
+            "</div>")
+        .appendTo( ul );
+    };
+  } );
+  </script> -->
+
+
+
