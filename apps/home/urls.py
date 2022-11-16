@@ -10,6 +10,7 @@ urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
+    path('userprofile', views.userprofile, name='userprofile'),
     path('profile/', views.profileView, name="profile"),
     path('edit-profile/<int:id>', views.editprofileView, name="edit_profile"),
     path('view-user-profile/<int:id>', views.userViewProfileView, name="user_view_profile"),

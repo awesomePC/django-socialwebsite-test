@@ -71,7 +71,7 @@ def register_user(request):
     else:
         form = SignUpForm()
     sign = 2
-    return render(request, 'home/b-profile.html', {'form': form, 'sign': sign})
+    return render(request, 'home/index.html', {'form': form, 'sign': sign})
 
 @login_required(login_url="/login")
 def logoutView(request):

@@ -3,17 +3,17 @@
 {% block content %}
 
 <!-- Profile -->
-<!-- <div class=""> -->
+<div class="">
   <!-- back -->
-  <!-- <div class="ml-12 absolute top-[75px] z-50 hidden lg:block z-[39]">
-    <a href="index.html" class="btn-md-primary flex bg-white hover:bg-white shadow-3xl">
+  <div class="ml-12 absolute top-[75px] z-50 hidden lg:block z-[39]">
+    <a href="{% url 'home' %}" class="btn-md-primary flex bg-white hover:bg-white shadow-3xl">
       <span class="-ml-7"><img src="{{ ASSETS_ROOT }}/icons/back-profile.svg" alt=""></span>
       <p class="text-slate-800 pl-2"> Back</p>
     </a>
-  </div> -->
+  </div>
   <!-- back end-->
   <!-- Profile Card -->
-  <!-- <div id="profilemodal-init" class="bg-white w-80 rounded-lg p-6  space-y-8 shadow-3xl mr-12 absolute top-[75px] right-0  hidden xl:block">
+  <div id="profilemodal-init" class="bg-white w-80 rounded-lg p-6  space-y-8 shadow-3xl mr-12 absolute top-[75px] right-0  hidden xl:block">
     <div class="flex border-b border-slate-200 pb-4 items-center">
       <div class="mr-3">
         <img src="{{ ASSETS_ROOT }}/img/profile-pic.png" class="flex-none w-auto" alt="">
@@ -72,14 +72,15 @@
 
     <div class="pt-4 flex space-x-4">
       <button class="btn-sm-primary w-full">Send Message </button>
-
-      <button class="btn-secendary-sm-border">Edit profile</button>
+     
+        <button  class="btn-secendary-sm-border"> <a href="{% url 'edit_profile' id=user.id %}">Edit profile</a></button>
+      
     </div>
-  </div> -->
+  </div>
 
   <!-- Profile Card End -->
 
-<!-- </div> -->
+</div>
 <!-- end profile -->
 
 
@@ -92,7 +93,7 @@
 </div>
 
 <!-- Profile mobile card -->
-<!-- <div id="profilemodal-mobile" class="bg-white w-[310px] rounded-lg p-6  space-y-8 shadow-3xl m-auto my-6   block xl:hidden">
+<div id="profilemodal-mobile" class="bg-white w-[310px] rounded-lg p-6  space-y-8 shadow-3xl m-auto my-6   block xl:hidden">
   <div class="flex border-b border-slate-200 pb-4 items-center">
     <div class="mr-3">
       <img src="{{ ASSETS_ROOT }}/img/profile-pic.png" class="flex-none w-auto" alt="">
@@ -151,10 +152,11 @@
 
   <div class="pt-4 flex space-x-4">
     <button class="btn-sm-primary w-full"> Message </button>
-
-    <button class="btn-secendary-sm-border">Edit profile</button>
+    
+    <button  class="btn-secendary-sm-border"><a href="{% url 'edit_profile' id=user.id %}">Edit profile</a></button>
+    
   </div>
-</div> -->
+</div>
 <!-- end profile mobile card -->
 <!-- main content -->
 <div class="flex items-center justify-center mt-4 pb-12 space-x-0 md:space-x-14 ">
@@ -478,16 +480,9 @@
       // profile
       // $("#showuserinfo").click(function() {
       //   if($(window).width()>1280)
-      //   {
-      //     $("#profilemodal-mobile").css('visibility','visible');
       //     $("#profilemodal-init").css('visibility','visible');
-      //   }
-         
-      //   else {
+      //   else
       //     $("#profilemodal-mobile").css('visibility','visible');
-      //     $("#profilemodal-init").css('visibility','visible');
-      //   }
-         
         
       // }); 
       // $("#profilemodal-init").css('visibility','hidden');

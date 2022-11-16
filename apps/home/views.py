@@ -30,7 +30,8 @@ FILE_EXTENTION =  {'.jpg', '.jpeg', '.png'}
 
 # @login_required(login_url="/login/")
 def index(request):
-
+    print(33333)
+    sign = 0
     all_posts = Posts.objects.filter(status="Enable").order_by("-id")
     data_list = []
     for ps in all_posts:
@@ -55,9 +56,40 @@ def index(request):
         data['long']        = ps.longitude
         data['created_at']  = ps.created_at
         data_list.append(data)
-    context = {'all_posts' : data_list,'request_user' : request}
+    context = {'all_posts' : data_list,'request_user' : request, 'sign': sign}
     # context = {'request' : request}
-    return render(request,"home/user-view-profile.html", context)
+    return render(request,"home/index.html", context)
+ 
+def userprofile(request):
+    print(33333)
+    sign = 0
+    all_posts = Posts.objects.filter(status="Enable").order_by("-id")
+    data_list = []
+    for ps in all_posts:
+        data = {}
+        data['likes_count'] = Like.objects.filter(post__id=ps.id, likes__gte=1).count()
+        current_user_like = Like.objects.filter(post__id=ps.id, post__user__id=ps.user.id, sender_id=request.user.id).first()
+        if current_user_like:
+            data['current_user_react'] = current_user_like.likes
+        else:
+            data['current_user_react'] = 0
+        data['id']          = ps.id
+        data['user_id']     = ps.user.id
+        data['username']    = ps.user.username
+        data['post_status'] = ps.post_status
+        data['caption']     = ps.caption
+        data['location']    = ps.location
+        if ps.upload_file:
+            data['upload_file']  = ps.upload_file
+        if ps.upload_img_file:
+            data['upload_img_file'] = ps.upload_img_file
+        data['lat']         = ps.latitude
+        data['long']        = ps.longitude
+        data['created_at']  = ps.created_at
+        data_list.append(data)
+    context = {'all_posts' : data_list,'request_user' : request, 'sign': sign}
+    # context = {'request' : request}
+    return render(request,"home/userprofile.html", context)
  
 
 
@@ -156,7 +188,8 @@ def editprofileView(request, id):
         phone = request.POST.get('phone')
         address = request.POST.get('address')
         bio = request.POST.get('bio')
-
+        posts =  Posts.objects.filter(id = id).order_by("-id")
+        print(posts)
         obj = Profile.objects.get(id=id)
         if image is None or image == '':
             image = obj.image
@@ -168,16 +201,18 @@ def editprofileView(request, id):
         obj.bio = bio
         obj.save()
 
-        return redirect('profile')
+        return redirect('userprofile')
 
     if request.method == "GET":
-        profile = Profile.objects.get(id=id)
+        # profile = Profile.objects.get(id=id)
+        profile = Profile.objects.all()
         context = {'profile':profile}
         return render(request, "home/edit-profile.html", context)
 
 
 
 def addpost(request):
+    sign = 0
     if request.method == "POST":
         data        = request.POST
         lat         = data.get('lat')
@@ -203,12 +238,15 @@ def addpost(request):
             obj.location    = address
         
             obj.save()
-            return redirect('home')
+            sign = 0
+            return render(request, "home/index.html", {'sign': sign})
+            # return redirect('home')
         except Exception as e:
             return HttpResponse("Invalid location api key.")
     
     else:
-        return render(request, "home/addpost.html")
+        sign = 3
+        return render(request, "home/index.html", {'sign': sign})
 
 
 

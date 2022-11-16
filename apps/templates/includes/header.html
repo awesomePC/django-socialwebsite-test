@@ -214,42 +214,120 @@
 
   <!-- Upload Videos -->
   <div id="uploadVideos" class="bg-slate-400/50 fixed w-full h-full z-50 hidden ">
-    <div class="bg-white w-auto sm:w-[500px] mx-auto mt-16 pt-8 pb-10 px-10 shadow-3xl rounded-lg">
-      <div class="space-y-8">
-        <div class="flex items-start justify-between">
-          <div>
-            <h1 class="font-bold text-2xl">Upload</h1>
+    <form method="post" id="addPost" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="hidden" id="latitude" name="lat"> 
+      <input type="hidden" id="longitude" name="lng">
+      <div class="bg-white w-auto sm:w-[500px] mx-auto mt-16 pt-8 pb-10 px-10 shadow-3xl rounded-lg">
+        <div class="space-y-8">
+          <div class="flex items-start justify-between">
+            <div>
+              <h1 class="font-bold text-2xl">Upload</h1>
+            </div>
+            <span id="close-upload-modal" class=" cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-modal.svg" alt=""></span>
           </div>
-          <span id="close-upload-modal" class=" cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-modal.svg" alt=""></span>
-        </div>
-        <div class="space-y-4">
-          <div class="flex flex-col  pb-6">
-            <img src="{{ ASSETS_ROOT }}/img/upload-graph.svg" class="w-72 mx-auto" alt="" data-xblocker="passed" style="visibility: visible;">
-          </div>
-
-          <div class="flex flex-col border-2 border-slate-300 rounded-lg border-dashed py-6 px-12 space-y-4">
-            <p class="mx-auto text-center">Drag your photos or videos here to start uploading.</p>
-            <button type="file" class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600">Browse files</button>
-          </div>
-
-          <div class="flex space-y-1 items-center justify-between bg-slate-100 p-2 rounded-lg px-4 ">
-            <div class="flex">
-              <div><img src="{{ ASSETS_ROOT }}/icons/play-icon.svg" class="w-12" alt=""></div>
-              <div class="ml-2">
-                <p>Video.MP4</p>
-                <p class="text-sm text-slate-400">5 MB</p>
-              </div>
+          <div class="space-y-4">
+            <div class="flex flex-col  pb-6">
+              <img src="{{ ASSETS_ROOT }}/img/upload-graph.svg" class="w-72 mx-auto" alt="" data-xblocker="passed" style="visibility: visible;">
+            </div>
+            <div class="flex flex-col  pb-6">
+              <br>
+                  <label for="Caption">Caption</label><br>
+                      <textarea id="caption" class="form-control" name="caption" placeholder="Write your Caption.." rows="2" cols="38"></textarea>
+                  </textarea>
+              <br>
             </div>
 
-            <div><img class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/delete-video.svg" alt=""></div>
+            <div class="flex flex-col border-2 border-slate-300 rounded-lg border-dashed py-6 px-12 space-y-4">
+              <p class="mx-auto text-center">Drag your photos or videos here to start uploading.</p>
+              <button type="file" class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600">Browse files</button>
+            </div>
+
+            <div class="flex space-y-1 items-center justify-between bg-slate-100 p-2 rounded-lg px-4 ">
+              <div class="flex">
+                <div><img src="{{ ASSETS_ROOT }}/icons/play-icon.svg" class="w-12" alt=""></div>
+                <div class="ml-2">
+                  <p>Video.MP4</p>
+                  <p class="text-sm text-slate-400">5 MB</p>
+                </div>
+              </div>
+
+              <div><img class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/delete-video.svg" alt=""></div>
+
+            </div>
 
           </div>
-
+          <button type="button" class="closeUploader btn-md-primary w-full">Upload</button>
         </div>
-        <button type="button" class="closeUploader btn-md-primary w-full">Upload</button>
       </div>
-    </div>
+    </form>
   </div>
+
+
+
+    <!-- Upload Videos -->
+    <!-- <div class="container">
+      <div class="row">
+          <div class="col-md-2 col-sm-12"></div>
+          <div class="col-md-8 col-sm-12">
+              <form method="post" id="addPost" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <input type="hidden" id="latitude" name="lat"> 
+                  <input type="hidden" id="longitude" name="lng">
+                  <div id="uploadVideos" class="  ">
+                      <div class="bg-white w-auto sm:w-[500px] mx-auto mt-16 pt-8 pb-10 px-10 shadow-3xl rounded-lg">
+                      <div class="space-y-8">
+                          <div class="flex items-start justify-between">
+                          <div>
+                              <h1 class="font-bold text-2xl">Upload</h1>
+                          </div>
+                          <span id="closeUploader" class=" cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/close-modal.svg" alt=""></span>
+                          </div>
+                          <div class="space-y-4">
+                          <div class="flex flex-col  pb-6">
+                              <img src="{{ ASSETS_ROOT }}/img/upload-graph.svg" class="w-72 mx-auto" alt="">
+                          </div>
+                           
+                          <br>
+                          <label for="Caption">Caption</label><br>
+                              <textarea id="caption" class="form-control" name="caption" placeholder="Write your Caption.." rows="2" cols="38"></textarea>
+                          </textarea>
+                          <br>
+
+                         
+                          <div class="flex flex-col border-2 border-slate-300 rounded-lg border-dashed py-6 px-12 space-y-4 "  >
+                              <p class="mx-auto text-center">Drag your photos or videos here to start uploading.</p>
+                              <div class="mx-auto text-center display-img-vid-con" id="img-vid-con"></div>
+                              <!-- <img class="img-radius img-fluid wid-80 imageshow profile_image"
+                                  id="image-display"> -->
+                              <!-- <input type="file" id="file_id" name="filename" onchange="loadFile(event)"  accept="image/*, video/*" required> -->
+                              <!-- <button type="file" class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600">Browse files</button> -->
+                              <!-- <input type="file" accept="image/*, video/*" name="img-vid" id="inp-img-vid">
+                          </div>
+
+                          <div class="flex space-y-1 items-center justify-between bg-slate-100 p-2 rounded-lg px-4 " >
+                              <div class="flex">
+                              <div><img src="{{ ASSETS_ROOT }}/icons/play-icon.svg" class="w-12" alt=""></div>
+                              <div class="ml-2">
+                                  <p >Video.MP4</p>
+                                  <P class="text-sm text-slate-400">5 MB</P>
+                              </div>
+                              </div>
+
+                              <div><img class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/delete-video.svg" alt=""></div>
+
+                          </div>
+
+                          </div>
+                          <button type="submit"  class="closeUploader btn-md-primary w-full">Upload</button>
+                      </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="col-md-2 col-sm-12"></div>
+      </div>
+  </div> --> 
   <!--  Upload Videos End -->
 </div>
 <!-- end overlay -->
@@ -265,7 +343,8 @@
         <!-- <a  href="/" >
           <img class="cursor-pointer" src="{{ ASSETS_ROOT }}/img/logo.svg" alt="">
         </a> -->
-        <a href="">
+        <!-- javascript:(0);" -->
+        <a href="{% url 'userprofile' %}" id="showuserinfo">
           <img class="cursor-pointer " src="{% if ps.user.profile.image %} {{ps.user.profile.image.url}} {% else %} /static/assets/img/profile-pic.png {% endif %}"
           alt="">
         </a>
@@ -334,7 +413,7 @@
     
     <div class="rightSide flex items-center space-x-5 md:space-x-8 ">
       <div class="relative notification" x-data="{ open: false }">
-        <span class="badge">3</span>
+        <span class="badge1">3</span>
         <div class="">
           <img @click="open = true" class="cursor-pointer" src="{{ ASSETS_ROOT }}/icons/notification.svg" alt="">
         </div>
@@ -657,6 +736,8 @@
         
       } else if($('#sign').text() == '1') {
         $("#loginID").removeClass("hidden");
+      } else if($('#sign').text() == '3') {
+        $("#uploadVideos").removeClass("hidden");
       }
       ///login&signup result
       
