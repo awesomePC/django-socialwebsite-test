@@ -22,8 +22,13 @@ from apps import COMMON
 from apps.authentication.models import FriendList, Like, Profile, User, Posts ,FriendRequest
 import json
 from django.db.models import Max
+from django.core.files.storage import FileSystemStorage
 
 from apps.helpers import check_extention, get_current_location
+import datetime
+ 
+
+
 
 FILE_EXTENTION =  {'.jpg', '.jpeg', '.png'}
 
@@ -87,7 +92,8 @@ def userprofile(request):
         data['long']        = ps.longitude
         data['created_at']  = ps.created_at
         data_list.append(data)
-    context = {'all_posts' : data_list,'request_user' : request, 'sign': sign}
+    # current_user = request.user
+    context = {'all_posts' : data_list, 'request_user' : request, 'sign': sign}
     # context = {'request' : request}
     return render(request,"home/userprofile.html", context)
  
@@ -193,12 +199,16 @@ def editprofileView(request, id):
             obj = Profile()
         else:
             obj = Profile.objects.get(user_id=id)
+        
         if image is None or image == '':
-            image = obj.image
+            obj.image = ""
+        # using now() to get current time
+        current_time = datetime.datetime.now()
+        image.name = str(id)+"_"+str(current_time)+"_"+image.name
         obj.image = image
-        obj.first_name =first_name
-        obj.last_name =last_name
-        obj.phone =phone
+        obj.first_name = first_name
+        obj.last_name = last_name
+        obj.phone = phone
         obj.address = address
         obj.bio = bio
         obj.user_id = id

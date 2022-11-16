@@ -1,7 +1,16 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 <div class="container-fluid">
+    <!-- back -->
+    <div class="ml-12 absolute top-[75px] z-50 hidden lg:block z-[39]">
+        <a href="{% url 'userprofile' %}" class="btn-md-primary flex bg-white hover:bg-white shadow-3xl">
+        <span class="-ml-7"><img src="{{ ASSETS_ROOT }}/icons/back-profile.svg" alt=""></span>
+        <p class="text-slate-800 pl-2"> Back</p>
+        </a>
+    </div>
+    <!-- back end-->
     <div class="row p-3">
+       
         <!-- Profile Modal -->
         <div class="col-md-3 col-sm-12"></div>
         <div class="col-md-6 col-sm-12">

@@ -240,7 +240,7 @@
 
             <div class="flex flex-col border-2 border-slate-300 rounded-lg border-dashed py-6 px-12 space-y-4">
               <p class="mx-auto text-center">Drag your photos or videos here to start uploading.</p>
-              <button type="file" class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600">Browse files</button>
+              <input type="file" class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600">Browse files</button>
             </div>
 
             <div class="flex space-y-1 items-center justify-between bg-slate-100 p-2 rounded-lg px-4 ">
@@ -345,7 +345,7 @@
         </a> -->
         <!-- javascript:(0);" -->
         <a href="{% url 'userprofile' %}" id="showuserinfo">
-          <img class="cursor-pointer " src="{% if ps.user.profile.image %} {{ps.user.profile.image.url}} {% else %} /static/assets/img/profile-pic.png {% endif %}"
+          <img class="cursor-pointer flex-none w-auto profile_img" src="{% if user.profile.image %} media/{{user.profile.image}} {% else %} /static/assets/img/profile-pic.png {% endif %}"
           alt="">
         </a>
       </div>

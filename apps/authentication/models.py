@@ -107,15 +107,15 @@ class Profile(models.Model):
 
     #     super(Profile,self).save()
 
-    # def save(self, *args, **kwargs):
-    #     super(Profile, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        super(Profile, self).save(*args, **kwargs)
 
-    #     img = Image.open(self.image.path)
+        img = Image.open(self.image.path)
 
-    #     if img.height > 44 or img.width > 44:
-    #         output_size = (44,44)
-    #         img.thumbnail(output_size)
-    #         img.save(self.image.path)
+        if img.height > 44 or img.width > 44:
+            output_size = (44,44)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
 
 
 class PasswordResetToken(models.Model):
