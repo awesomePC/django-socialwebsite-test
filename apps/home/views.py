@@ -188,9 +188,11 @@ def editprofileView(request, id):
         phone = request.POST.get('phone')
         address = request.POST.get('address')
         bio = request.POST.get('bio')
-        posts =  Posts.objects.filter(id = id).order_by("-id")
-        print(posts)
-        obj = Profile.objects.get(id=id)
+        posts =  Profile.objects.filter(user_id =id).count()
+        if posts == 0:
+            obj = Profile()
+        else:
+            obj = Profile.objects.get(user_id=id)
         if image is None or image == '':
             image = obj.image
         obj.image = image
@@ -199,13 +201,14 @@ def editprofileView(request, id):
         obj.phone =phone
         obj.address = address
         obj.bio = bio
+        obj.user_id = id
         obj.save()
 
         return redirect('userprofile')
 
     if request.method == "GET":
-        # profile = Profile.objects.get(id=id)
-        profile = Profile.objects.all()
+        profile = Profile.objects.get(user_id=id)
+        # profile = Profile.objects.all()
         context = {'profile':profile}
         return render(request, "home/edit-profile.html", context)
 

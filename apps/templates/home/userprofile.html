@@ -2,6 +2,15 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 
+
+
+
+<div class="bg-elements">
+  <div class="bgtop absolute -z-40 top-6 right-2/4"><img src="{{ ASSETS_ROOT }}/img/bg-top.png" alt=""></div>
+  <div class="bgright absolute -z-40 -right-10 top-52"><img src="{{ ASSETS_ROOT }}/img/bg-right.png" alt=""></div>
+  <div class="bgleft absolute -z-40 -left-10 top-96"> <img src="{{ ASSETS_ROOT }}/img/bg-left.png" alt=""></div>
+  <div class="bgbottom absolute  -bottom-10 right-96"><img src="{{ ASSETS_ROOT }}/img/bg-bottom.png" alt=""></div>
+</div>
 <!-- Profile -->
 <div class="">
   <!-- back -->
@@ -16,18 +25,20 @@
   <div id="profilemodal-init" class="bg-white w-80 rounded-lg p-6  space-y-8 shadow-3xl mr-12 absolute top-[75px] right-0  hidden xl:block">
     <div class="flex border-b border-slate-200 pb-4 items-center">
       <div class="mr-3">
-        <img src="{{ ASSETS_ROOT }}/img/profile-pic.png" class="flex-none w-auto" alt="">
+        <img src=" /static/assets/img/profile-pic.png " class="flex-none w-auto profile_img" alt="">
       </div>
       <div class="">
-        <p class="text-base font-bold">JordanVanga</p>
-        <p class="text-base text-slate-600">Toronto, CA</p>
+        <p class="text-base font-bold">{{user.username.title}}</p>
+        <p class="text-base text-slate-600">{% if user.profile.address %}{{user.profile.address}}{% endif %}</p>
       </div>
+
     </div>
+      <button type="submit" id="loginButton" class="btn-md-primary w-small">Follow</button>
 
     <div class="flex ">
       <div class="flex items-center">
         <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-          <img src="{{ ASSETS_ROOT }}/icons/friends.svg" alt="">
+          <img src="/static/assets/icons/friends.svg" alt="">
         </div>
         <div class=" w-24 ">
           <p class="font-normal text-sm text-slate-500">Friends</p>
@@ -37,7 +48,7 @@
 
       <div class="flex items-center">
         <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-          <img src="{{ ASSETS_ROOT }}/icons/views.svg" alt="">
+          <img src="/static/assets/icons/views.svg" alt="">
         </div>
         <div class=" ">
           <p class="font-normal text-sm text-slate-500">Views</p>
@@ -49,7 +60,7 @@
     <div class="flex ">
       <div class="flex items-center">
         <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-          <img src="{{ ASSETS_ROOT }}/icons/comments.svg" alt="">
+          <img src="/static/assets/icons/comments.svg" alt="">
         </div>
         <div class="w-24 ">
           <p class="font-normal text-sm text-slate-500">Comments</p>
@@ -59,7 +70,7 @@
 
       <div class="flex items-center">
         <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-          <img src="{{ ASSETS_ROOT }}/icons/reactions.svg" alt="">
+          <img src="/static/assets/icons/reactions.svg" alt="">
         </div>
         <div class=" ">
           <p class="font-normal text-sm text-slate-500">Reactions</p>
@@ -67,14 +78,10 @@
         </div>
       </div>
     </div>
-
-
-
     <div class="pt-4 flex space-x-4">
       <button class="btn-sm-primary w-full">Send Message </button>
-     
-        <button  class="btn-secendary-sm-border"> <a href="{% url 'edit_profile' id=user.id %}">Edit profile</a></button>
-      
+
+      <button class="btn-secendary-sm-border">Edit profile</button>
     </div>
   </div>
 
@@ -83,31 +90,24 @@
 </div>
 <!-- end profile -->
 
-
-
-<div class="bg-elements">
-  <div class="bgtop absolute -z-40 top-6 right-2/4"><img src="{{ ASSETS_ROOT }}/img/bg-top.png" alt=""></div>
-  <div class="bgright absolute -z-40 -right-10 top-52"><img src="{{ ASSETS_ROOT }}/img/bg-right.png" alt=""></div>
-  <div class="bgleft absolute -z-40 -left-10 top-96"> <img src="{{ ASSETS_ROOT }}/img/bg-left.png" alt=""></div>
-  <div class="bgbottom absolute  -bottom-10 right-96"><img src="{{ ASSETS_ROOT }}/img/bg-bottom.png" alt=""></div>
-</div>
-
 <!-- Profile mobile card -->
 <div id="profilemodal-mobile" class="bg-white w-[310px] rounded-lg p-6  space-y-8 shadow-3xl m-auto my-6   block xl:hidden">
   <div class="flex border-b border-slate-200 pb-4 items-center">
     <div class="mr-3">
-      <img src="{{ ASSETS_ROOT }}/img/profile-pic.png" class="flex-none w-auto" alt="">
+      <img src=" /static/assets/img/profile-pic.png " class="flex-none w-auto profile_img" alt="">
     </div>
     <div class="">
-      <p class="text-base font-bold">JordanVanga</p>
-      <p class="text-base text-slate-600">Toronto, CA</p>
+      <p class="text-base font-bold">{{user.username.title}}</p>
+      <p class="text-base text-slate-600">{% if user.profile.address %}{{user.profile.address}}{% endif %}</p>
     </div>
+
   </div>
+    <button type="submit" id="loginButton" class="btn-md-primary w-small">Follow</button>
 
   <div class="flex ">
     <div class="flex items-center">
       <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-        <img src="{{ ASSETS_ROOT }}/icons/friends.svg" alt="">
+        <img src="/static/assets/icons/friends.svg" alt="">
       </div>
       <div class=" w-24 ">
         <p class="font-normal text-sm text-slate-500">Friends</p>
@@ -117,7 +117,7 @@
 
     <div class="flex items-center">
       <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-        <img src="{{ ASSETS_ROOT }}/icons/views.svg" alt="">
+        <img src="/static/assets/icons/views.svg" alt="">
       </div>
       <div class=" ">
         <p class="font-normal text-sm text-slate-500">Views</p>
@@ -129,7 +129,7 @@
   <div class="flex ">
     <div class="flex items-center">
       <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-        <img src="{{ ASSETS_ROOT }}/icons/comments.svg" alt="">
+        <img src="/static/assets/icons/comments.svg" alt="">
       </div>
       <div class="w-24 ">
         <p class="font-normal text-sm text-slate-500">Comments</p>
@@ -139,7 +139,7 @@
 
     <div class="flex items-center">
       <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-        <img src="{{ ASSETS_ROOT }}/icons/reactions.svg" alt="">
+        <img src="/static/assets/icons/reactions.svg" alt="">
       </div>
       <div class=" ">
         <p class="font-normal text-sm text-slate-500">Reactions</p>
@@ -147,17 +147,15 @@
       </div>
     </div>
   </div>
-
-
-
   <div class="pt-4 flex space-x-4">
-    <button class="btn-sm-primary w-full"> Message </button>
-    
-    <button  class="btn-secendary-sm-border"><a href="{% url 'edit_profile' id=user.id %}">Edit profile</a></button>
-    
+    <button class="btn-sm-primary w-full">Send Message </button>
+ <a href=""></a>
+    <button class="btn-secendary-sm-border"> Edit profile</button>
   </div>
 </div>
 <!-- end profile mobile card -->
+
+
 <!-- main content -->
 <div class="flex items-center justify-center mt-4 pb-12 space-x-0 md:space-x-14 ">
   <div class="z-[45] hidden lg:block">
@@ -311,8 +309,6 @@
   </div>
   
 </div>
-
-
 <!-- end main content -->
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
