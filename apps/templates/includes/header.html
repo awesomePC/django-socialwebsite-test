@@ -214,7 +214,7 @@
 
   <!-- Upload Videos -->
   <div id="uploadVideos" class="bg-slate-400/50 fixed w-full h-full z-50 hidden ">
-    <form method="post" id="addPost" enctype="multipart/form-data">
+    <form method="post" action="{% url 'addpost' %}" id="addPost" enctype="multipart/form-data">
       {% csrf_token %}
       <input type="hidden" id="latitude" name="lat"> 
       <input type="hidden" id="longitude" name="lng">
@@ -237,10 +237,24 @@
                   </textarea>
               <br>
             </div>
+            <!-- <div class="display-img-vid-con">
+              showing selected image here -->
+              <!-- <img src="" id="preview-img"> -->
+        
+              <!-- showing selected video here -->
+              <!-- <video controls>
+                <source src="" id="preview-vid">
+                  Your browser does not support HTML5 video.
+              </video>
+            </div>  -->
 
             <div class="flex flex-col border-2 border-slate-300 rounded-lg border-dashed py-6 px-12 space-y-4">
               <p class="mx-auto text-center">Drag your photos or videos here to start uploading.</p>
-              <input type="file" class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600">Browse files</button>
+              <button>
+                <input type="file"  class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600" accept="image/*, video/*" name="img-vid" id="inp-img-vid">
+              <!-- <input type="file" class="btn-md-primary bg-slate-700 mx-auto hover:bg-slate-600"> -->
+              Browse files
+              </button>
             </div>
 
             <div class="flex space-y-1 items-center justify-between bg-slate-100 p-2 rounded-lg px-4 ">
@@ -257,7 +271,7 @@
             </div>
 
           </div>
-          <button type="button" class="closeUploader btn-md-primary w-full">Upload</button>
+          <button type="submit" class="closeUploader btn-md-primary w-full">Upload</button>
         </div>
       </div>
     </form>
@@ -741,7 +755,29 @@
       }
       ///login&signup result
       
-      
+      // upload
+      $("#inp-img-vid").change(function() {
+        imgPreview(this);
+      });
+
+      function imgPreview(input) {
+        var file = input.files[0];
+        var mixedfile = file['type'].split("/");
+        var filetype = mixedfile[0]; // (image, video)
+        if(filetype == "image"){
+          var reader = new FileReader();
+          reader.onload = function(e){
+            $("#preview-img").show().attr("src", e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+        }else if(filetype == "video"){
+          $("#preview-vid").show().attr("src", URL.createObjectURL(input.files[0]));
+          $("#videoPlayer")[0].load();
+        }else{
+            alert("Invalid file type");
+        }
+      }
+      // end upload
       
       
       

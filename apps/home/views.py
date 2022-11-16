@@ -200,12 +200,16 @@ def editprofileView(request, id):
         else:
             obj = Profile.objects.get(user_id=id)
         
-        if image is None or image == '':
-            obj.image = ""
-        # using now() to get current time
-        current_time = datetime.datetime.now()
-        image.name = str(id)+"_"+str(current_time)+"_"+image.name
-        obj.image = image
+        if image is not None:
+            # delete old if exists
+            import os
+            if os.path.exists(os.path.join(settings.MEDIA_ROOT,str(obj.image))):
+                print('yes')
+                os.remove(os.path.join(settings.MEDIA_ROOT,str(obj.image)))
+            # using now() to get current time
+            current_time = datetime.datetime.now()
+            image.name = str(id)+"_"+str(current_time)+"_"+image.name
+            obj.image = image
         obj.first_name = first_name
         obj.last_name = last_name
         obj.phone = phone
@@ -217,7 +221,11 @@ def editprofileView(request, id):
         return redirect('userprofile')
 
     if request.method == "GET":
-        profile = Profile.objects.get(user_id=id)
+        posts =  Profile.objects.filter(user_id =id).count()
+        if posts == 0:
+            profile= Profile()
+        else:
+            profile = Profile.objects.get(user_id=id)
         # profile = Profile.objects.all()
         context = {'profile':profile}
         return render(request, "home/edit-profile.html", context)
@@ -226,12 +234,14 @@ def editprofileView(request, id):
 
 def addpost(request):
     sign = 0
+   
     if request.method == "POST":
         data        = request.POST
         lat         = data.get('lat')
         lng         = data.get('lng')
         caption     = data.get('caption')
-        upload_file = request.FILES['img-vid']
+        upload_file = request.FILES.get('img-vid')
+       
         if lat and lng is None:
             return HttpResponse("Please turn on you location.")
         try:
@@ -239,11 +249,15 @@ def addpost(request):
             address, lat, lng = get_current_location(lat,lng)
             # save data
             obj = Posts()
+            current_time = datetime.datetime.now()
             if check_extention(upload_file) in FILE_EXTENTION:
+                upload_file.name = str(request.user.id)+"_"+str(current_time)+"_"+upload_file.name
                 obj.upload_img_file = upload_file
+                
             else:
+                upload_file.name = str(request.user.id)+"_"+str(current_time)+"_"+upload_file.name
                 obj.upload_file = upload_file
-
+          
             obj.user        = request.user
             obj.caption     = caption
             obj.latitude    = lat
