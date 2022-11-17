@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.conf import settings
 from apps import COMMON
 # from apps.accounts.views import profile
-from apps.authentication.models import FriendList, Like, Profile, User, Posts ,FriendRequest
+from apps.authentication.models import FriendList,Comments, Like, Profile, User, Posts ,FriendRequest
 import json
 from django.db.models import Max
 from django.core.files.storage import FileSystemStorage
@@ -39,7 +39,13 @@ def index(request):
             data['current_user_react'] = 0
         data['id']          = ps.id
         data['user_id']     = ps.user.id
-        
+        data['views']     = ps.views
+        comments = Comments.objects.filter(post_id = ps.id)
+        if comments.exists():
+            data['comments'] = Comments.objects.get(post_id = ps.id)
+        else:
+            data['comments'] = 0
+
         data['user_image'] = ps.user.profile.image.name
         data['username']    = ps.user.username
         data['post_status'] = ps.post_status
@@ -76,6 +82,7 @@ def userprofile(request, id):
             data['current_user_react'] = 0
         data['id']          = ps.id
         data['user_id']     = ps.user.id
+        data['views']     = ps.views
         data['user_image'] = ps.user.profile.image.name
         data['username']    = ps.user.username
         data['post_status'] = ps.post_status
@@ -436,10 +443,12 @@ def decline_friend_request(request, id):
 # viewincrease
 def view_increase(request):
     if request.method == "POST" and request.is_ajax():
-        # post = Posts.objects.filter(id = request.u.i, status="Enable")
-        # post.comment = request
-        # post.save()
-        print(request.POST.get('data'))
+        pid = request.POST.get('pid')
+        pviewnum = request.POST.get('viewnum')
+        print(pid, pviewnum)
+        post = Posts.objects.get(id = pid)
+        post.views = pviewnum
+        post.save()
         msg = True
         return JsonResponse({"msg": msg}, status=200)
     # else:

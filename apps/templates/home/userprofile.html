@@ -184,6 +184,7 @@
         $("#user_name").attr("href",url);
         $("#photo_container").attr("href",url);
         $("#user_name").text(data[id].username);
+        $("#viewnum").text(data[id].views);
 
         if(data[id].img_vid == 'vid') {
           $("#scrollVideos").html(`<video style="width: 280; height: 497;" id="video" class="mr-4"><source src="/media/${data[id].upload_file}"Your browser does not support HTML video.</video>`);
@@ -246,35 +247,31 @@
        //view increae
        $("#viewimg").click(function() {
         
-        let currentviewnum = parseInt($("#viewnum").text());
+        let currentviewnum = parseInt($("#viewnum").text())+1;
 
-        $("#viewnum").text(currentviewnum+1);
-      }); 
-
-      data1 = 1
+        $("#viewnum").text(currentviewnum);
+        data[currentID].views = currentviewnum;
         //ajax 
         $.ajax({
-          data: {csrfmiddlewaretoken: '{{ csrf_token }}', 'data': data1 }, // получаяем данные формы
+          data: {csrfmiddlewaretoken: '{{ csrf_token }}',pid: data[currentID].id, viewnum:currentviewnum }, // получаяем данные формы
           url: "{% url 'view_increase' %}",
           type: "POST",
           success: function (response) {
-              if (response.name == true) {
-                 alert("ok");
-              }
-              else {
-                 alert("no");
-              }
+             alert("saved successfully");
           },
-      
+          
           error: function (response) {
        
-              alert()
+              alert('error');
           },
           // headers: {
           //   'X-Requested-With': 'XMLHttpRequest'
           // }
         });
         //end ajax
+      }); 
+
+     
       //end view increase
 
   });
