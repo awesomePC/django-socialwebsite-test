@@ -10,7 +10,7 @@ urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
-    path('userprofile', views.userprofile, name='userprofile'),
+    path('userprofile/<int:id>', views.userprofile, name='userprofile'),
     path('profile/', views.profileView, name="profile"),
     path('edit-profile/<int:id>', views.editprofileView, name="edit_profile"),
     path('view-user-profile/<int:id>', views.userViewProfileView, name="user_view_profile"),
@@ -23,6 +23,9 @@ urlpatterns = [
     path('add-friend', views.send_friend_request, name='add_friend_request'),
     path('request-accept', views.accept_friend_request, name='request_accept'),
 
+    # ajax
+    # view increase
+    path('view-increase', views.view_increase, name='view_increase'),
 
 
 

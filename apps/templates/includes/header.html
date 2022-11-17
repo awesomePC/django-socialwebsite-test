@@ -358,7 +358,7 @@
           <img class="cursor-pointer" src="{{ ASSETS_ROOT }}/img/logo.svg" alt="">
         </a> -->
         <!-- javascript:(0);" -->
-        <a href="{% url 'userprofile' %}" id="showuserinfo">
+        <a  href="{% url 'userprofile' id=user.id %}" id="showuserinfo">
           <img class="cursor-pointer flex-none w-auto profile_img" src="{% if user.profile.image %} media/{{user.profile.image}} {% else %} /static/assets/img/profile-pic.png {% endif %}"
           alt="">
         </a>

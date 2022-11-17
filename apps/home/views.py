@@ -25,6 +25,7 @@ FILE_EXTENTION =  {'.jpg', '.jpeg', '.png'}
 
 # @login_required(login_url="/login/")
 def index(request):
+    print("start")
     sign = 0
     all_posts = Posts.objects.filter(status="Enable").order_by("-id")
     data_list = []
@@ -38,26 +39,32 @@ def index(request):
             data['current_user_react'] = 0
         data['id']          = ps.id
         data['user_id']     = ps.user.id
+        
+        data['user_image'] = ps.user.profile.image.name
         data['username']    = ps.user.username
         data['post_status'] = ps.post_status
         data['caption']     = ps.caption
         data['location']    = ps.location
         if ps.upload_file:
-            data['upload_file']  = ps.upload_file
+            data['upload_file']  = ps.upload_file.name
+            data['img_vid'] = 'vid'
         if ps.upload_img_file:
-            data['upload_img_file'] = ps.upload_img_file
+            data['upload_img_file'] = ps.upload_img_file.name
+            data['img_vid'] = 'img'
         data['lat']         = ps.latitude
         data['long']        = ps.longitude
-        data['created_at']  = ps.created_at
+        # data['created_at']  = ps.created_at
         data_list.append(data)
     context = {'all_posts' : data_list,'request_user' : request, 'sign': sign}
     # context = {'request' : request}
     return render(request,"home/index.html", context)
- 
-def userprofile(request):
-    print(33333)
+
+# @login_required
+# (login_url="/login/")
+def userprofile(request, id):
     sign = 0
-    all_posts = Posts.objects.filter(status="Enable").order_by("-id")
+    # exists()
+    all_posts = Posts.objects.filter(status="Enable", user_id = id).order_by("-id")
     data_list = []
     for ps in all_posts:
         data = {}
@@ -69,25 +76,26 @@ def userprofile(request):
             data['current_user_react'] = 0
         data['id']          = ps.id
         data['user_id']     = ps.user.id
+        data['user_image'] = ps.user.profile.image.name
         data['username']    = ps.user.username
         data['post_status'] = ps.post_status
         data['caption']     = ps.caption
         data['location']    = ps.location
         if ps.upload_file:
-            data['upload_file']  = ps.upload_file
+            data['upload_file']  = ps.upload_file.name
+            data['img_vid'] = 'vid'
         if ps.upload_img_file:
-            data['upload_img_file'] = ps.upload_img_file
+            data['upload_img_file'] = ps.upload_img_file.name
+            data['img_vid'] = 'img'
         data['lat']         = ps.latitude
         data['long']        = ps.longitude
-        data['created_at']  = ps.created_at
+        # data['created_at']  = ps.created_at
         data_list.append(data)
     # current_user = request.user
     context = {'all_posts' : data_list, 'request_user' : request, 'sign': sign}
     # context = {'request' : request}
     return render(request,"home/userprofile.html", context)
  
-
-
 # @login_required(login_url="/login/")
 # def pages(request):
 #     context = {}
@@ -424,6 +432,20 @@ def decline_friend_request(request, id):
     frequest.delete()
     return redirect('profile')
 
+# ajax
+# viewincrease
+def view_increase(request):
+    if request.method == "POST" and request.is_ajax():
+        # post = Posts.objects.filter(id = request.u.i, status="Enable")
+        # post.comment = request
+        # post.save()
+        print(request.POST.get('data'))
+        msg = True
+        return JsonResponse({"msg": msg}, status=200)
+    # else:
+    #     msg = False
+    #     return JsonResponse({"msg": msg}, status=400)
 
+    
 
 
