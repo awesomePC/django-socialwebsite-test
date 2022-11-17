@@ -1,11 +1,3 @@
-# from django.shortcuts import render
-
-# # Create your views here.
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 from re import U
 from django import template
 from django.conf import settings
@@ -28,14 +20,11 @@ from apps.helpers import check_extention, get_current_location
 import datetime
  
 
-
-
 FILE_EXTENTION =  {'.jpg', '.jpeg', '.png'}
 
 
 # @login_required(login_url="/login/")
 def index(request):
-    print(33333)
     sign = 0
     all_posts = Posts.objects.filter(status="Enable").order_by("-id")
     data_list = []
@@ -187,6 +176,7 @@ def profileView(request):
 
 
 def editprofileView(request, id):
+    
     if request.method == "POST":
         image = request.FILES.get('image')
         first_name = request.POST.get('first_name')
@@ -194,8 +184,8 @@ def editprofileView(request, id):
         phone = request.POST.get('phone')
         address = request.POST.get('address')
         bio = request.POST.get('bio')
-        posts =  Profile.objects.filter(user_id =id).count()
-        if posts == 0:
+        postsnum =  Profile.objects.filter(user_id =id).count()
+        if postsnum == 0:
             obj = Profile()
         else:
             obj = Profile.objects.get(user_id=id)
@@ -204,7 +194,6 @@ def editprofileView(request, id):
             # delete old if exists
             import os
             if os.path.exists(os.path.join(settings.MEDIA_ROOT,str(obj.image))):
-                print('yes')
                 os.remove(os.path.join(settings.MEDIA_ROOT,str(obj.image)))
             # using now() to get current time
             current_time = datetime.datetime.now()
@@ -221,8 +210,8 @@ def editprofileView(request, id):
         return redirect('userprofile')
 
     if request.method == "GET":
-        posts =  Profile.objects.filter(user_id =id).count()
-        if posts == 0:
+        postsnum =  Profile.objects.filter(user_id =id).count()
+        if postsnum == 0:
             profile= Profile()
         else:
             profile = Profile.objects.get(user_id=id)
