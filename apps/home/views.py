@@ -42,7 +42,18 @@ def index(request):
         data['views']     = ps.views
         comments = Comments.objects.filter(post_id = ps.id)
         if comments.exists():
-            data['comments'] = Comments.objects.get(post_id = ps.id)
+             all_comments= Comments.objects.filter(post_id = ps.id)
+             data['comments'] = []
+             for com in all_comments:
+                temp = {}
+                temp['id'] = com.id
+                temp['comment'] = com.comment
+                user = User.objects.get(id = com.user_id)
+                temp['user_name'] = user.username
+                temp['post_id'] = com.post_id
+                # temp['created_at'] = com.created_at
+                # temp['updated_at'] = com.updated_at
+                data['comments'].append(temp)
         else:
             data['comments'] = 0
 
@@ -83,6 +94,22 @@ def userprofile(request, id):
         data['id']          = ps.id
         data['user_id']     = ps.user.id
         data['views']     = ps.views
+        comments = Comments.objects.filter(post_id = ps.id)
+        if comments.exists():
+             all_comments= Comments.objects.filter(post_id = ps.id)
+             data['comments'] = []
+             for com in all_comments:
+                temp = {}
+                temp['id'] = com.id
+                temp['comment'] = com.comment
+                user = User.objects.get(id = com.user_id)
+                temp['user_name'] = user.username
+                temp['post_id'] = com.post_id
+                # temp['created_at'] = com.created_at
+                # temp['updated_at'] = com.updated_at
+                data['comments'].append(temp)
+        else:
+            data['comments'] = 0
         data['user_image'] = ps.user.profile.image.name
         data['username']    = ps.user.username
         data['post_status'] = ps.post_status
@@ -440,7 +467,7 @@ def decline_friend_request(request, id):
     return redirect('profile')
 
 # ajax
-# viewincrease
+# view increase
 def view_increase(request):
     if request.method == "POST" and request.is_ajax():
         pid = request.POST.get('pid')
@@ -451,10 +478,20 @@ def view_increase(request):
         post.save()
         msg = True
         return JsonResponse({"msg": msg}, status=200)
-    # else:
-    #     msg = False
-    #     return JsonResponse({"msg": msg}, status=400)
 
-    
-
+# comment save
+def comment_save(request):
+    if request.method == "POST" and request.is_ajax():
+        pid = request.POST.get('pid')
+        comment = request.POST.get('comment')
+        user_id = request.POST.get('user_id')
+        print(pid, comment, user_id)
+        com = Comments()
+        com.post_id = pid
+        com.comment = comment
+        com.user_id = user_id
+        com.save()
+        msg = True
+        return JsonResponse({"msg": msg}, status=200)
+ 
 

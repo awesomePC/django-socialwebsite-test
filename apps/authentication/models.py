@@ -155,7 +155,7 @@ class Posts(models.Model):
 
     created_at      =   models.DateTimeField(auto_now_add=True)
     updated_at      =   models.DateTimeField(auto_now=True)
-    
+
 
 
     def __str__(self):
@@ -166,7 +166,7 @@ class Posts(models.Model):
 class Comments(models.Model):
     post            = models.ForeignKey(Posts, on_delete=models.CASCADE)
     comment         = models.TextField(blank=False,    null=False)
-
+    user           = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at      = models.DateTimeField(auto_now_add=True)
     updated_at      = models.DateTimeField(auto_now=True)
 

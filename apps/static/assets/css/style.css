@@ -60,6 +60,11 @@
     color: white;
   }
 /* end */
+    .row-comment-container {
+        height: 40vh;
+        overflow-x: scroll;
+    }
+
     .row-comment {
-        height: 43vh;
+        border-bottom: #c5c5c5 solid 1px;
     }

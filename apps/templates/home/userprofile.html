@@ -34,72 +34,25 @@
                     <img src="{{ ASSETS_ROOT }}/img/close-comment.png" alt="">
                   </span>
                 </div>
-                <!-- first comment -->
-                <div class="1comments ">
-                  <div class="border  rounded-lg border-slate-200 ">
-                    <div class="p-4  ">
-                    <div class="flex items-start ">
-                      <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-1.png" alt=""></div>
-                      <div class="flex flex-col ml-3">
-                        <p class="font-base font-semibold pb-2 mt-2">Jordan <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
-                        <p>This is hilarious. I can definitly relate to this lol.</p>
-                        <div class="border rounded-lg border-slate-200 mt-4  ">
-                          <div class="flex  px-4 py-4 ">
-                            <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-2.png" alt=""></div>
-                            <div class="flex flex-col ml-2">
-                              <p class="font-base font-semibold pb-2 mt-1">Jordan <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
-                              <p>Same here</p>
-                            </div>
-                          </div>
-                          <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2 ">
-                            <p class="text-primary font-bold cursor-pointer">React</p>
-                            <div class="flex items-center cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-1 font-semibold">8</span></div>
-                            <p class="cursor-pointer">Reply</p>
-                          </div>
+                       <!-- first comment -->
+                       <div class="1comments ">
+                        <div id="row-comment-container" class="border row-comment-container border-slate-20">
+        
                         </div>
-                        <div class=" px-4 py- mt-3">
-                          <p class="text-slate-800 font-normal underline cursor-pointer"> <span class="font-bold">6</span>  More replies</p>
+                        <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2">
+                          <p class="text-primary font-bold cursor-pointer">React</p>
+                          <div class="flex items-center cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-1 font-semibold">You</span><span id="comment_users">, 4 others</span></div>
+                          <p class="cursor-pointer"></p>
                         </div>
                       </div>
+       
+                      <div class="flex items-start mt-28 px rounded-lg ">
+                        <input id="comment-input" type="text" placeholder="Comment" class="bg-slate-100 rounded-full border-none w-full h-11
+                        mr-2 focus:ring-primary pl-6 " required>
+                        <img src="{{ ASSETS_ROOT }}/img/emoji.png" class="w-auto h-auto cursor-pointer  mr-2" alt="">
+                        <img id="comment-send" src="{{ ASSETS_ROOT }}/icons/send.svg" class="w-auto h-auto cursor-pointer" alt="">
                     </div>
-                  </div>
-                    <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2">
-                      <p class="text-primary font-bold cursor-pointer">React</p>
-                      <div class="flex items-center cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-1 font-semibold">You</span><span class="">, 4 others</span></div>
-                      <p class="cursor-pointer"></p>
-                    </div>
-                  </div>
-                </div>
-                  <!-- first comment end -->
-                  <!-- second comment  
-                  <div class="1comments pb-14">
-                    <div class="border  rounded-lg border-slate-200 ">
-                      <div class="p-4  ">
-                      <div class="flex items-start ">
-                        <div class="flex-none"><img  src="{{ ASSETS_ROOT }}/img/comment-3.png" alt=""></div>
-                        <div class="flex flex-col ml-3">
-                          <p class="font-base font-semibold pb-2 mt-2">Jordan <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
-                          <p>This is awesome</p>
-                        </div>
-                      </div>
-                    </div>
-                      <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2">
-                        <p class="text-slate-800 cursor-pointer font-bold">React</p>
-                        <p class="cursor-pointer">Reply</p>
-                      </div>
-                    </div>
-                  </div>
-                  second comment end -->
-
-                  <!-- write comment -->
-
-                <div class="flex items-start mt-28 px rounded-lg ">
-                  <input type="text" placeholder="Comment" class="bg-slate-100 rounded-full border-none w-full h-11
-                  mr-2 focus:ring-primary pl-6 ">
-                  <img src="{{ ASSETS_ROOT }}/img/emoji.png" class="w-auto h-auto cursor-pointer  mr-2" alt="">
-                  <img src="{{ ASSETS_ROOT }}/icons/send.svg" class="w-auto h-auto cursor-pointer" alt="">
-              </div>
-                  <!-- write comment end -->
+                        <!-- write comment end -->
               </div>
               </div>
           </div>
@@ -273,6 +226,73 @@
 
      
       //end view increase
+
+       //comment save
+       $("#comment-send").click(function() {
+        if({{user.is_authenticated|yesno:"true,false"}})
+        { 
+          let comment = $("#comment-input").val();
+          let user_id = {{user.id}};
+          //ajax 
+          $.ajax({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}',pid: data[currentID].id, comment:comment,user_id:user_id}, // получаяем данные формы
+            url: "{% url 'comment_save' %}",
+            type: "POST",
+            success: function (response) {
+              alert("saved successfully");
+
+              let str = `<div class="p-4 row-comment" >
+                        <div class="flex items-start ">
+                          <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-1.png" alt=""></div>
+                          <div class="flex flex-col ml-3">
+                            <p class="font-base font-semibold pb-2 mt-2">{{user.username}} <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
+                            <p>${comment}</p>
+                            <!-- <div class="border rounded-lg border-slate-200 mt-4  ">
+                              <div class="flex  px-4 py-4 ">
+                                <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-2.png" alt=""></div>
+                                <div class="flex flex-col ml-2">
+                                  <p class="font-base font-semibold pb-2 mt-1">Jordan <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
+                                  <p>${comment}</p>
+                                </div>
+                              </div>
+                              <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2 ">
+                                <p class="text-primary font-bold cursor-pointer">React</p>
+                                <div class="flex items-center cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-1 font-semibold">8</span></div>
+                                <p class="cursor-pointer">Reply</p>
+                              </div>
+                            </div>
+                            <div class=" px-4 py- mt-3">
+                              <p class="text-slate-800 font-normal underline cursor-pointer"> <span class="font-bold">6</span>  More replies</p>
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>`;
+                $('#row-comment-container').append(str);
+                $('#comment_length').html("10&nbspComments");
+                
+                //         ///////////////////////comment content show///////////////////
+                // let comment_length = data[currentID].comments.length
+                // if(comment_length > 0) {
+                //   let str = ``;
+                //   for(let i = 0; i < comment_length; i++) {
+
+            
+            
+            },
+        
+            error: function (response) {
+        
+                alert('error');
+            },
+          });
+          //end ajax
+        } else {
+          alert("login before saving comment");
+        }
+        
+
+      });
+      //end comment
 
   });
 </script>

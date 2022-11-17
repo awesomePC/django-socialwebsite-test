@@ -26,7 +26,8 @@ urlpatterns = [
     # ajax
     # view increase
     path('view-increase', views.view_increase, name='view_increase'),
-
+    #comment-save
+    path('comment-save', views.comment_save, name='comment_save'),
 
 
     # Matches any html file

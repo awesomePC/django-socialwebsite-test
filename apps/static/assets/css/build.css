@@ -1480,10 +1480,12 @@ select {
 
 .border-2 {
   border-width: 2px;
+
 }
 
 .border {
   border-width: 1px;
+  border: #ededed solid 1px;
 }
 
 .border-b {
