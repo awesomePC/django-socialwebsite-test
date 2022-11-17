@@ -8,6 +8,152 @@
   <!-- <div class="bgbottom absolute  -bottom-10 right-96"><img src="{{ ASSETS_ROOT }}/img/bg-bottom.png" alt=""></div> -->
 </div>
 
+<!-- Profile -->
+<div class="">
+  <!-- back -->
+  <div class="ml-12 absolute top-[75px] z-50 hidden lg:block z-[39]">
+    <a href="{% url 'home' %}" class="btn-md-primary flex bg-white hover:bg-white shadow-3xl">
+      <span class="-ml-7"><img src="{{ ASSETS_ROOT }}/icons/back-profile.svg" alt=""></span>
+      <p class="text-slate-800 pl-2"> Back</p>
+    </a>
+  </div>
+  <!-- back end-->
+  <!-- Profile Card -->
+  <div id="profilemodal-init" class="bg-white w-80 rounded-lg p-6  space-y-8 shadow-3xl mr-12 absolute top-[75px] right-0  hidden xl:block">
+    <div class="flex border-b border-slate-200 pb-4 items-center">
+      <div class="mr-3">
+        <img src=" /media/{{show_user.profile.image}} " class="flex-none w-auto profile_img" alt="">
+      </div>
+      <div class="">
+        <p class="text-base font-bold">{{show_user.username.title}}</p>
+        <p class="text-base text-slate-600">{% if show_user.profile.address %}{{show_user.profile.address}}{% endif %}</p>
+      </div>
+
+    </div>
+      <button type="submit" id="loginButton" class="btn-md-primary w-small">Follow</button>
+
+    <div class="flex ">
+      <div class="flex items-center">
+        <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+          <img src="/static/assets/icons/friends.svg" alt="">
+        </div>
+        <div class=" w-24 ">
+          <p class="font-normal text-sm text-slate-500">Friends</p>
+          <p class="font-bold text-base font-roboto"> 5,3K</p>
+        </div>
+      </div>
+
+      <div class="flex items-center">
+        <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+          <img src="/static/assets/icons/views.svg" alt="">
+        </div>
+        <div class=" ">
+          <p class="font-normal text-sm text-slate-500">Views</p>
+          <p class="font-bold text-base font-roboto"> 7,2K</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex ">
+      <div class="flex items-center">
+        <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+          <img src="/static/assets/icons/comments.svg" alt="">
+        </div>
+        <div class="w-24 ">
+          <p class="font-normal text-sm text-slate-500">Comments</p>
+          <p class="font-bold text-base font-roboto"> 741K</p>
+        </div>
+      </div>
+
+      <div class="flex items-center">
+        <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+          <img src="/static/assets/icons/reactions.svg" alt="">
+        </div>
+        <div class=" ">
+          <p class="font-normal text-sm text-slate-500">Reactions</p>
+          <p class="font-bold text-base font-roboto"> 10,8K</p>
+        </div>
+      </div>
+    </div>
+    <div class="pt-4 flex space-x-4">
+      <button class="btn-sm-primary w-full">Send Message </button>
+      {% if show_user.id == request_user.id %}
+      <button class="btn-secendary-sm-border"><a href="{% url 'edit_profile' id=show_user.id %}">Edit profile  </a></button>
+      {% endif%}
+    </div>
+  </div>
+
+  <!-- Profile Card End -->
+
+</div>
+<!-- end profile -->
+
+<!-- Profile mobile card -->
+<div id="profilemodal-mobile" class="bg-white w-[310px] rounded-lg p-6  space-y-8 shadow-3xl m-auto my-6   block xl:hidden">
+  <div class="flex border-b border-slate-200 pb-4 items-center">
+    <div class="mr-3">
+      <img src=" /media/{{user.profile.image}} " class="flex-none w-auto profile_img" alt="">
+    </div>
+    <div class="">
+      <p class="text-base font-bold">{{show_user.username.title}}</p>
+      <p class="text-base text-slate-600">{% if show_user.profile.address %}{{show_user.profile.address}}{% endif %}</p>
+    </div>
+
+  </div>
+    <button type="submit" id="loginButton" class="btn-md-primary w-small">Follow</button>
+
+  <div class="flex ">
+    <div class="flex items-center">
+      <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+        <img src="/static/assets/icons/friends.svg" alt="">
+      </div>
+      <div class=" w-24 ">
+        <p class="font-normal text-sm text-slate-500">Friends</p>
+        <p class="font-bold text-base font-roboto"> 5,3K</p>
+      </div>
+    </div>
+
+    <div class="flex items-center">
+      <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+        <img src="/static/assets/icons/views.svg" alt="">
+      </div>
+      <div class=" ">
+        <p class="font-normal text-sm text-slate-500">Views</p>
+        <p class="font-bold text-base font-roboto"> 7,2K</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex ">
+    <div class="flex items-center">
+      <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+        <img src="/static/assets/icons/comments.svg" alt="">
+      </div>
+      <div class="w-24 ">
+        <p class="font-normal text-sm text-slate-500">Comments</p>
+        <p class="font-bold text-base font-roboto"> 741K</p>
+      </div>
+    </div>
+
+    <div class="flex items-center">
+      <div class="bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+        <img src="/static/assets/icons/reactions.svg" alt="">
+      </div>
+      <div class=" ">
+        <p class="font-normal text-sm text-slate-500">Reactions</p>
+        <p class="font-bold text-base font-roboto"> 10,8K</p>
+      </div>
+    </div>
+  </div>
+  <div class="pt-4 flex space-x-4">
+    <button class="btn-sm-primary w-full">Send Message </button>
+  
+    {% if show_user.id == request_user.id %}
+    <button class="btn-secendary-sm-border"><a href="{% url 'edit_profile' id=show_user.id %}">Edit profile  </a></button>
+    {% endif%}</div>
+</div>
+<!-- end profile mobile card -->
+
 <!-- The content -->
 <div class="flex items-center justify-center mt-4 pb-12 space-x-0 md:space-x-14 ">
   <div class="z-[45] hidden lg:block">
@@ -27,8 +173,8 @@
               <div class=" ">
                 <div class="CommnetHeader flex items-center justify-between border-b pb-3 border-slate-200">
                   <div class="flex space-x-4">
-                    <div class="text-base font-medium">40 Comments</div>
-                    <div class="flex"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-2 flex items-center">75</span></div>
+                    <div id="comment_length" class="text-base font-medium">40 Comments</div>
+                    <div class="flex"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span id="comment_views" class="ml-2 flex items-center">75</span></div>
                   </div>
                   <span id="closeComments" class=" cursor-pointer ">
                     <img src="{{ ASSETS_ROOT }}/img/close-comment.png" alt="">
@@ -59,9 +205,9 @@
         </div>
         <div class="header flex justify-between mb-4">
           <div class="flex items-center justify-center space-x-2">
-            <a id="photo_container"  href="{% url 'userprofile' id=0 %}"><img id="user_photo" class="cursor-pointer flex-none w-auto profile_img " src="{{ ASSETS_ROOT }}/img/user-video.png" alt=""></a>
+            <a id="photo_container"  href="{% url 'userprofile' id=show_user.id %}"><img id="user_photo" class="cursor-pointer flex-none w-auto profile_img " src="{{ ASSETS_ROOT }}/img/user-video.png" alt=""></a>
             <div>
-              <a id="user_name" class="text-base font-bold cursor-pointer "  href="{% url 'userprofile' id=0 %}">JordanVanga</a>
+              <a id="user_name" class="text-base font-bold cursor-pointer "  href="{% url 'userprofile' id=show_user.id %}">JordanVanga</a>
             
               <div class="flex space-x-3 opacity-70">
                 <div class="flex space-x-1">
@@ -112,7 +258,7 @@
   </div>
 
 </div>
-<!-- Videos End -->
+<!-- content End -->
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -126,6 +272,7 @@
       let data ={{ all_posts | safe }};
       let datalength = data.length;
       let currentID = 0;
+      let commentOnOff = false;
       console.log(data);
 
       // first post data show
@@ -169,7 +316,45 @@
       });
 
       $("#openComments").click(function() {
-        
+        ///////////////////////comment content show///////////////////
+        let comment_length = data[currentID].comments.length
+          if(comment_length > 0) {
+            let str = ``;
+            for(let i = 0; i < comment_length; i++) {
+              str+= `<div class="p-4 row-comment" >
+                        <div class="flex items-start ">
+                          <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-1.png" alt=""></div>
+                          <div class="flex flex-col ml-3">
+                            <p class="font-base font-semibold pb-2 mt-2">${data[currentID].comments[i].user_name} <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
+                            <p>${data[currentID].comments[i].comment}</p>
+                            <!-- <div class="border rounded-lg border-slate-200 mt-4  ">
+                              <div class="flex  px-4 py-4 ">
+                                <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-2.png" alt=""></div>
+                                <div class="flex flex-col ml-2">
+                                  <p class="font-base font-semibold pb-2 mt-1">Jordan <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
+                                  <p>${data[currentID].comments[i].comment}</p>
+                                </div>
+                              </div>
+                              <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2 ">
+                                <p class="text-primary font-bold cursor-pointer">React</p>
+                                <div class="flex items-center cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-1 font-semibold">8</span></div>
+                                <p class="cursor-pointer">Reply</p>
+                              </div>
+                            </div>
+                            <div class=" px-4 py- mt-3">
+                              <p class="text-slate-800 font-normal underline cursor-pointer"> <span class="font-bold">6</span>  More replies</p>
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>`;
+            }
+            $('#row-comment-container').html(str);
+            $('#comment_length').html(comment_length+" Comments");
+            $('#comment_views').html(data[currentID].views);
+           
+          }
+          ///////////////////////end comment show///////////////////////
+          commentOnOff = true;
           if($("#userComments").css("top")== "710px")
           {
             $("#userComments").css("top", 0);
@@ -185,7 +370,8 @@
       });
 
       $("#closeComments").click(function() {
-        
+        commentOnOff = false;
+        $("#comment-input").val("");
         if($("#userComments").css("top")== "0px")
         {
           $("#userComments").css("top", 710);
@@ -225,74 +411,72 @@
       }); 
 
      
-      //end view increase
+    //end view increase
 
-       //comment save
-       $("#comment-send").click(function() {
-        if({{user.is_authenticated|yesno:"true,false"}})
-        { 
-          let comment = $("#comment-input").val();
-          let user_id = {{user.id}};
-          //ajax 
-          $.ajax({
-            data: {csrfmiddlewaretoken: '{{ csrf_token }}',pid: data[currentID].id, comment:comment,user_id:user_id}, // получаяем данные формы
-            url: "{% url 'comment_save' %}",
-            type: "POST",
-            success: function (response) {
-              alert("saved successfully");
-
-              let str = `<div class="p-4 row-comment" >
-                        <div class="flex items-start ">
-                          <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-1.png" alt=""></div>
-                          <div class="flex flex-col ml-3">
-                            <p class="font-base font-semibold pb-2 mt-2">{{user.username}} <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
-                            <p>${comment}</p>
-                            <!-- <div class="border rounded-lg border-slate-200 mt-4  ">
-                              <div class="flex  px-4 py-4 ">
-                                <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-2.png" alt=""></div>
-                                <div class="flex flex-col ml-2">
-                                  <p class="font-base font-semibold pb-2 mt-1">Jordan <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
-                                  <p>${comment}</p>
-                                </div>
-                              </div>
-                              <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2 ">
-                                <p class="text-primary font-bold cursor-pointer">React</p>
-                                <div class="flex items-center cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-1 font-semibold">8</span></div>
-                                <p class="cursor-pointer">Reply</p>
+      //comment save
+      $("#comment-send").click(function() {
+      if({{user.is_authenticated|yesno:"true,false"}})
+      { 
+        
+        let comment = $("#comment-input").val();
+        let user_id = {{user.id}};
+        //ajax 
+        $.ajax({
+          data: {csrfmiddlewaretoken: '{{ csrf_token }}',pid: data[currentID].id, comment:comment,user_id:user_id}, // получаяем данные формы
+          url: "{% url 'comment_save' %}",
+          type: "POST",
+          success: function (response) {
+            console.log(response.data);
+            let da = response.data;
+            console.log(da);
+            data[currentID].comments.push(da)
+            alert("saved successfully");
+            $("#comment-input").val("");
+            
+            let str = `<div class="p-4 row-comment" >
+                      <div class="flex items-start ">
+                        <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-1.png" alt=""></div>
+                        <div class="flex flex-col ml-3">
+                          <p class="font-base font-semibold pb-2 mt-2">{{user.username}} <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
+                          <p>${comment}</p>
+                          <!-- <div class="border rounded-lg border-slate-200 mt-4  ">
+                            <div class="flex  px-4 py-4 ">
+                              <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-2.png" alt=""></div>
+                              <div class="flex flex-col ml-2">
+                                <p class="font-base font-semibold pb-2 mt-1">Jordan <span class="text-slate-400 pl-1 font-normal text-sm">2 hours ago</span> </p>
+                                <p>${comment}</p>
                               </div>
                             </div>
-                            <div class=" px-4 py- mt-3">
-                              <p class="text-slate-800 font-normal underline cursor-pointer"> <span class="font-bold">6</span>  More replies</p>
-                            </div> -->
+                            <div class="bg-slate-100 w-full flex items-center space-x-4 px-4 py-2 ">
+                              <p class="text-primary font-bold cursor-pointer">React</p>
+                              <div class="flex items-center cursor-pointer"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span class="ml-1 font-semibold">8</span></div>
+                              <p class="cursor-pointer">Reply</p>
+                            </div>
                           </div>
+                          <div class=" px-4 py- mt-3">
+                            <p class="text-slate-800 font-normal underline cursor-pointer"> <span class="font-bold">6</span>  More replies</p>
+                          </div> -->
                         </div>
-                      </div>`;
-                $('#row-comment-container').append(str);
-                $('#comment_length').html("10&nbspComments");
-                
-                //         ///////////////////////comment content show///////////////////
-                // let comment_length = data[currentID].comments.length
-                // if(comment_length > 0) {
-                //   let str = ``;
-                //   for(let i = 0; i < comment_length; i++) {
+                      </div>
+                    </div>`;
+              $('#row-comment-container').append(str);
+              $('#comment_length').html(data[currentID].comments.length+"&nbspComments");
+              
+          },
+      
+          error: function (response) {
+      
+              alert('error');
+          },
+        });
+        //end ajax
+      } else {
+        alert("login before saving comment");
+      }
+      
 
-            
-            
-            },
-        
-            error: function (response) {
-        
-                alert('error');
-            },
-          });
-          //end ajax
-        } else {
-          alert("login before saving comment");
-        }
-        
-
-      });
-      //end comment
+    });
+    //end comment
 
   });
 </script>

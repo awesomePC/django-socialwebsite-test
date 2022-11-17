@@ -76,8 +76,7 @@ def index(request):
     # context = {'request' : request}
     return render(request,"home/index.html", context)
 
-# @login_required
-# (login_url="/login/")
+@login_required(login_url="/login/")
 def userprofile(request, id):
     sign = 0
     # exists()
@@ -126,7 +125,9 @@ def userprofile(request, id):
         # data['created_at']  = ps.created_at
         data_list.append(data)
     # current_user = request.user
-    context = {'all_posts' : data_list, 'request_user' : request, 'sign': sign}
+    # print(user)
+    # print(request.user)
+    context = {'all_posts' : data_list, 'show_user': user, 'request_user' : request.user, 'sign': sign}
     # context = {'request' : request}
     return render(request,"home/userprofile.html", context)
  
@@ -249,7 +250,7 @@ def editprofileView(request, id):
         obj.user_id = id
         obj.save()
 
-        return redirect('userprofile')
+        return redirect('userprofile', id = id)
 
     if request.method == "GET":
         postsnum =  Profile.objects.filter(user_id =id).count()
@@ -491,7 +492,18 @@ def comment_save(request):
         com.comment = comment
         com.user_id = user_id
         com.save()
+
+
+   
+        temp = {}
+        temp['id'] = com.id
+        temp['comment'] = com.comment
+        user = User.objects.get(id = com.user_id)
+        temp['user_name'] = user.username
+        temp['post_id'] = com.post_id
+        # temp['created_at'] = com.created_at
+        # temp['updated_at'] = com.updated_at
         msg = True
-        return JsonResponse({"msg": msg}, status=200)
+        return JsonResponse({"msg": msg,"data": temp}, status=200)
  
 

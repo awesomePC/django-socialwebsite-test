@@ -370,6 +370,7 @@
       $("#closeComments").click(function() {
         
         commentOnOff = false;
+        $("#comment-input").val("");
         if($("#userComments").css("top")== "0px")
         {
           $("#userComments").css("top", 710);
@@ -414,6 +415,7 @@
       $("#comment-send").click(function() {
         if({{user.is_authenticated|yesno:"true,false"}})
         { 
+          
           let comment = $("#comment-input").val();
           let user_id = {{user.id}};
           //ajax 
@@ -422,8 +424,12 @@
             url: "{% url 'comment_save' %}",
             type: "POST",
             success: function (response) {
+              console.log(response.data);
+              let da = response.data;
+              console.log(da);
+              data[currentID].comments.push(da)
               alert("saved successfully");
-
+              $("#comment-input").val("");
               let str = `<div class="p-4 row-comment" >
                         <div class="flex items-start ">
                           <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-1.png" alt=""></div>
@@ -451,16 +457,8 @@
                         </div>
                       </div>`;
                 $('#row-comment-container').append(str);
-                $('#comment_length').html("10&nbspComments");
+                $('#comment_length').html(data[currentID].comments.length+"&nbspComments");
                 
-                //         ///////////////////////comment content show///////////////////
-                // let comment_length = data[currentID].comments.length
-                // if(comment_length > 0) {
-                //   let str = ``;
-                //   for(let i = 0; i < comment_length; i++) {
-
-            
-            
             },
         
             error: function (response) {
