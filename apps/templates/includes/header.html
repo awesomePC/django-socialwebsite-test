@@ -778,57 +778,59 @@
         }
       }
       // end upload
-      
+ 
       //search
-      $('#search').keypress(function() {
-        let searchfriend = $('#search').val();
-        //ajax 
-        $.ajax({
-          data: {csrfmiddlewaretoken: '{{ csrf_token }}',search: searchfriend}, // получаяем данные формы
-          url: "{% url 'search' %}",
-          type: "POST",
-          success: function (response) {
-            if(response.msg) {
-              let re_data = response.data;
-              let datalength = re_data.length;
-              if(datalength == 0)
-              {
-                alert("no match");
-              } else {
-                console.log(re_data);
-                let str = ``;
-                for(let i = 0; i < datalength; i++)
+      $('#search').keypress(function(e) {
+        
+        if(e.keyCode === 13) {
+          // alert()
+          let searchfriend = $('#search').val();
+          //ajax 
+          $.ajax({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}',search: searchfriend}, // получаяем данные формы
+            url: "{% url 'search' %}",
+            type: "POST",
+            success: function (response) {
+              if(response.msg) {
+                let re_data = response.data;
+                let datalength = re_data.length;
+                if(datalength == 0)
                 {
-                  let url = "{% url 'userprofile' '1' %}";
-                  url = url.replace('1', re_data[i].id);
+                  alert("no match");
+                } else {
+                  console.log(re_data);
+                  let str = ``;
+                  for(let i = 0; i < datalength; i++)
+                  {
+                    let url = "{% url 'userprofile' '1' %}";
+                    url = url.replace('1', re_data[i].id);
 
-                  str += `<li class="px-4 py-3 hover:bg-slate-100">
-                            <a  href=${url} class="flex items-center">
-                              <img src="{{ ASSETS_ROOT }}/img/search-img.png" class="w-auto h-auto" alt="">
-                              <div class="ml-3">
-                                <div class="text-base font-medium">${re_data[i].username}</div>
-                                <div class="text-sm text-slate-600">100K followers</div>
-                              </div>
-                            </a>
-                          </li>`;
-                  
+                    str += `<li class="px-4 py-3 hover:bg-slate-100">
+                              <a  href=${url} class="flex items-center">
+                                <img src="{{ ASSETS_ROOT }}/img/search-img.png" class="w-auto h-auto" alt="">
+                                <div class="ml-3">
+                                  <div class="text-base font-medium">${re_data[i].username}</div>
+                                  <div class="text-sm text-slate-600">100K followers</div>
+                                </div>
+                              </a>
+                            </li>`;
+                    
+                  }
+                  $("#searchList").html(str);
+
                 }
-                $("#searchList").html(str);
-
+              } else {
+                alert("no friends");
               }
-            } else {
-              alert("no friends");
-            }
-             
-            
-
-          },
-
-          error: function (response) {
-              alert('error');
-          },
-        });
-        //end ajax
+              
+            },
+            error: function (response) {
+                alert('error');
+            },
+          });
+          //end ajax
+        }
+        
       });
       //end search
       

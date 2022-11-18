@@ -63,7 +63,7 @@ urlpatterns = [
 
     # Leave `Home.Urls` as last the last line
     path("", include("apps.accounts.urls")),
-    path("", include("apps.home.urls")),
+    re_path("", include("apps.home.urls")),
     #chat
     # path('', login_required(TemplateView.as_view(template_name='base.html')), name='home'),
     # path('users/', UsersListView.as_view(), name='users_list'),

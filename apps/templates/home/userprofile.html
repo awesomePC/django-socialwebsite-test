@@ -510,6 +510,83 @@
     });
     //end follow
 
+    //chat
+    // Automatically set the focus to the room name input
+    // document.querySelector('#room-name-input').focus();
+
+    // // If you hit "enter" on the keyboard, trigger the click method
+    // document.querySelector('#room-name-input').onkeyup = function(e) {
+    //   if (e.keyCode === 13) {
+    //     document.querySelector('#room-name-submit').click();
+    //   }
+    // };
+
+    // // When you submit the form, redirect the user to the room page
+    // document.querySelector('#room-name-submit').onclick = function(e) {
+    //   var roomName = document.querySelector('#room-name-input').value;
+    //   var userName = document.querySelector('#username-input').value;
+
+    //   window.location.replace(roomName + '/?username=' + userName);
+    // };
+
+    alert("start")
+    const chatSocket = new WebSocket(
+      'ws://'
+      + window.location.host
+      + '/ws/'
+      + 1
+      + '/'
+    );
+    alert("end")
+    console.log(chatSocket);
+
+    chatSocket.onmessage = function(e) {
+      console.log('onMessage');
+      alert("Message");
+    };
+
+    chatSocket.onclose = function(e) {
+      console.error('The socket closed unexpectedly');
+    };
+
+    //
+    chatSocket.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+
+      if (data.message) {
+        document.querySelector('#chat-messages').innerHTML += ('' + data.username + ': ' + data.message + '');
+      } else {
+        alert('The message was empty!')
+      }
+    };
+
+    // document.querySelector('#chat-message-input').focus();
+    // document.querySelector('#chat-message-input').onkeyup = function(e) {
+    //   if (e.keyCode === 13) {
+    //     document.querySelector('#chat-message-submit').click();
+    //   }
+    // };
+
+    // document.querySelector('#chat-message-submit').onclick = function(e) {
+    //   const messageInputDom = document.querySelector('#chat-message-input');
+    //   const message = messageInputDom.value;
+
+    //   chatSocket.send(JSON.stringify({
+    //     'message': message,
+    //     'username': userName,
+    //     'room': roomName
+    //   }));
+
+    //   messageInputDom.value = '';
+    // };
+
+    chatSocket.send(JSON.stringify({
+        'message': 1,
+        'username': 1,
+        'room': 1
+    }));
+    // end chat
+
   });
 </script>
 

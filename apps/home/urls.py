@@ -5,6 +5,13 @@ Copyright (c) 2019 - present AppSeed.us
 
 from django.urls import path
 from apps.home import views
+from django.urls import path
+
+from . import consumers
+
+websocket_urlpatterns = [
+  path('ws//', consumers.ChatConsumer.as_asgi()), # Using asgi
+]
 
 urlpatterns = [
 
