@@ -54,9 +54,8 @@ urlpatterns = [
     # # path("", include("apps.accounts.urls")),
     # path("", include("apps.home.urls")),
 
-    # path('jet/', include('jet.urls')),  # Django JET URLS
-    # path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')), # Django JET dashboard URLS
-
+    path(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    path(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     path('admin/', admin.site.urls), # Django admin route
     path("", include("apps.authentication.urls")), # Auth routes - login / register
 

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="Group_61" data-name="Group 61" transform="translate(-93 -661)">
+    <rect id="Rectangle_9" data-name="Rectangle 9" width="32" height="32" rx="6" transform="translate(93 661)" fill="#fff"/>
+    <g id="vuesax_bold_location" data-name="vuesax/bold/location" transform="translate(-331 477)">
+      <path id="Vector" d="M17.5,6.7A8.626,8.626,0,0,0,8.88,0H8.87A8.624,8.624,0,0,0,.25,6.69C-.92,11.85,2.24,16.22,5.1,18.97a5.422,5.422,0,0,0,7.55,0C15.51,16.22,18.67,11.86,17.5,6.7ZM8.88,11.71a3.15,3.15,0,1,1,3.15-3.15A3.15,3.15,0,0,1,8.88,11.71Z" transform="translate(431.12 189.75)" fill="#9d9da5"/>
+      <path id="Vector-2" data-name="Vector" d="M0,0H24V24H0Z" transform="translate(428 188)" fill="none" opacity="0"/>
+      <path id="Vector-3" data-name="Vector" d="M0,0H24V24H0Z" transform="translate(452 212) rotate(180)" fill="none" opacity="0"/>
+    </g>
+  </g>
+</svg>

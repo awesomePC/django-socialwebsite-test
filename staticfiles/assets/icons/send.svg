@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="39" height="40" viewBox="0 0 39 40">
+  <g id="Group_15559" data-name="Group 15559" transform="translate(-787 -680)">
+    <rect id="Rectangle_6612" data-name="Rectangle 6612" width="39" height="40" rx="19.5" transform="translate(787 680)" fill="#e2477c"/>
+    <g id="vuesax_bold_send" data-name="vuesax/bold/send" transform="translate(559 372)">
+      <g id="send">
+        <path id="Vector" d="M15.02,5.509,6.46,1.229C.71-1.651-1.65.709,1.23,6.459L2.1,8.2a1.822,1.822,0,0,1,0,1.61l-.87,1.73c-2.88,5.75-.53,8.11,5.23,5.23l8.56-4.28C18.86,10.569,18.86,7.429,15.02,5.509Zm-3.23,4.24H6.39a.75.75,0,0,1,0-1.5h5.4a.75.75,0,0,1,0,1.5Z" transform="translate(239.05 319.001)" fill="#fdf8fa"/>
+        <path id="Vector-2" data-name="Vector" d="M0,0H24V24H0Z" transform="translate(260 340) rotate(180)" fill="none" opacity="0"/>
+      </g>
+    </g>
+  </g>
+</svg>

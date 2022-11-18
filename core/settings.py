@@ -33,7 +33,11 @@ MEDIA_ROOT = join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 # Application definition
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,6 +81,7 @@ TEMPLATES = [
             ],
         },
     },
+    
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'

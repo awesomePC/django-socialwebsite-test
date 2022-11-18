@@ -1,0 +1,10 @@
+<svg id="vuesax_outline_close-circle" data-name="vuesax/outline/close-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="close-circle">
+    <path id="Vector" d="M12,24A12,12,0,1,1,24,12,12.01,12.01,0,0,1,12,24Z" fill="#fff"/>
+    <g id="Group_15456" data-name="Group 15456" transform="translate(8.422 8.422)">
+      <path id="Vector-2" data-name="Vector" d="M.747,7.157a.742.742,0,0,1-.53-.22.754.754,0,0,1,0-1.06L5.878.218a.75.75,0,1,1,1.06,1.06l-5.66,5.66A.725.725,0,0,1,.747,7.157Z" fill="#ff4d4d"/>
+      <path id="Vector-3" data-name="Vector" d="M6.407,7.157a.742.742,0,0,1-.53-.22L.218,1.277A.75.75,0,0,1,1.277.218l5.66,5.66a.754.754,0,0,1,0,1.06A.742.742,0,0,1,6.407,7.157Z" fill="#ff4d4d"/>
+    </g>
+    <path id="Vector-4" data-name="Vector" d="M0,0H24V24H0Z" fill="none" opacity="0"/>
+  </g>
+</svg>
