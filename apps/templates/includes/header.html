@@ -375,9 +375,9 @@
         </div>
 
         <div @click.away="open = false"> 
-          <input type="search" @click="open = true" class=" pl-4 sm:pl-9 w-24 md:w-full text-base text-slate-900 bg-transparent 
+          <input id="search" type="search" @click="open = true" class=" pl-4 sm:pl-9 w-24 md:w-full text-base text-slate-900 bg-transparent 
           rounded-lg border border-slate-300 focus:ring-0 focus:border-primary
-          " placeholder="Search" required="">
+          " placeholder="Search" required>
 
           <!-- Search List -->
           <div class=" bg-white shadow-3xl absolute z-50 top-14 rounded-lg w-72 left-0" x-show="open" style="display: none;">
@@ -779,6 +779,30 @@
       }
       // end upload
       
+      //search
+      $("#followbtn").click(function() {
+
+        let show_user_id = {{show_user.id}};
+        let user_id = {{user.id}};
+        //ajax 
+        $.ajax({
+          data: {csrfmiddlewaretoken: '{{ csrf_token }}',id: show_user_id}, // получаяем данные формы
+          url: "{% url 'follow_save' %}",
+          type: "POST",
+          success: function (response) {
+            if(response.msg)
+            alert("saved successfully");
+            alert();
+
+          },
+
+          error: function (response) {
+              alert('error');
+          },
+        });
+        //end ajax
+      });
+      //end search
       
       
       

@@ -28,7 +28,8 @@ urlpatterns = [
     path('view-increase', views.view_increase, name='view_increase'),
     #comment-save
     path('comment-save', views.comment_save, name='comment_save'),
-
+    #follow-save
+    path('follow-save', views.follow_save, name='follow_save'),
 
     # Matches any html file
     # re_path(r'^.*\.*', views.pages, name='pages'),

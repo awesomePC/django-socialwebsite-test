@@ -30,7 +30,10 @@
       </div>
 
     </div>
-      <button type="submit" id="loginButton" class="btn-md-primary w-small">Follow</button>
+    {% if show_user.id != request_user.id %}
+        <button type="submit" id="followbtn" class="btn-md-primary w-small">Follow</button>
+    {% endif%}
+     
 
     <div class="flex ">
       <div class="flex items-center">
@@ -78,7 +81,9 @@
     <div class="pt-4 flex space-x-4">
       <button class="btn-sm-primary w-full">Send Message </button>
       {% if show_user.id == request_user.id %}
-      <button class="btn-secendary-sm-border"><a href="{% url 'edit_profile' id=show_user.id %}">Edit profile  </a></button>
+      <!-- <a class="btn-secendary-sm-border" > -->
+        <a href="{% url 'edit_profile' id=show_user.id %}" class="btn-edit btn-secendary-sm-border">Edit profile </a>
+      <!-- </a> -->
       {% endif%}
     </div>
   </div>
@@ -92,7 +97,7 @@
 <div id="profilemodal-mobile" class="bg-white w-[310px] rounded-lg p-6  space-y-8 shadow-3xl m-auto my-6   block xl:hidden">
   <div class="flex border-b border-slate-200 pb-4 items-center">
     <div class="mr-3">
-      <img src=" /media/{{user.profile.image}} " class="flex-none w-auto profile_img" alt="">
+      <img src=" /media/{{show_user.profile.image}} " class="flex-none w-auto profile_img" alt="">
     </div>
     <div class="">
       <p class="text-base font-bold">{{show_user.username.title}}</p>
@@ -173,8 +178,8 @@
               <div class=" ">
                 <div class="CommnetHeader flex items-center justify-between border-b pb-3 border-slate-200">
                   <div class="flex space-x-4">
-                    <div id="comment_length" class="text-base font-medium">40 Comments</div>
-                    <div class="flex"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span id="comment_views" class="ml-2 flex items-center">75</span></div>
+                    <div id="comment_length" class="text-base font-medium">0 Comments</div>
+                    <div class="flex"><img src="{{ ASSETS_ROOT }}/icons/lol.svg" alt=""> <span id="comment_views" class="ml-2 flex items-center">0</span></div>
                   </div>
                   <span id="closeComments" class=" cursor-pointer ">
                     <img src="{{ ASSETS_ROOT }}/img/close-comment.png" alt="">
@@ -432,7 +437,7 @@
             data[currentID].comments.push(da)
             alert("saved successfully");
             $("#comment-input").val("");
-            
+
             let str = `<div class="p-4 row-comment" >
                       <div class="flex items-start ">
                         <div class="flex-none"><img src="{{ ASSETS_ROOT }}/img/comment-1.png" alt=""></div>
@@ -477,6 +482,32 @@
 
     });
     //end comment
+
+    //follow button
+    // <a href="{% url 'edit_profile' id=show_user.id %}">
+    $("#followbtn").click(function() {
+
+          let show_user_id = {{show_user.id}};
+          let user_id = {{user.id}};
+          //ajax 
+          $.ajax({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}',id: show_user_id}, // получаяем данные формы
+            url: "{% url 'follow_save' %}",
+            type: "POST",
+            success: function (response) {
+              if(response.msg)
+               alert("saved successfully");
+              alert();
+  
+            },
+        
+            error: function (response) {
+                alert('error');
+            },
+          });
+          //end ajax
+    });
+    //end follow
 
   });
 </script>

@@ -790,6 +790,10 @@ select {
   transition-duration: 150ms;
 }
 
+.btn-edit {
+  text-align: center;
+}
+
 .btn-secendary-border:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(226 71 124 / var(--tw-bg-opacity));

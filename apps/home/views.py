@@ -55,7 +55,7 @@ def index(request):
                 # temp['updated_at'] = com.updated_at
                 data['comments'].append(temp)
         else:
-            data['comments'] = 0
+            data['comments'] = []
 
         data['user_image'] = ps.user.profile.image.name
         data['username']    = ps.user.username
@@ -80,6 +80,8 @@ def index(request):
 def userprofile(request, id):
     sign = 0
     # exists()
+    print(id)
+    show_user = User.objects.get(id = id)
     all_posts = Posts.objects.filter(status="Enable", user_id = id).order_by("-id")
     data_list = []
     for ps in all_posts:
@@ -108,7 +110,7 @@ def userprofile(request, id):
                 # temp['updated_at'] = com.updated_at
                 data['comments'].append(temp)
         else:
-            data['comments'] = 0
+            data['comments'] = []
         data['user_image'] = ps.user.profile.image.name
         data['username']    = ps.user.username
         data['post_status'] = ps.post_status
@@ -127,7 +129,7 @@ def userprofile(request, id):
     # current_user = request.user
     # print(user)
     # print(request.user)
-    context = {'all_posts' : data_list, 'show_user': user, 'request_user' : request.user, 'sign': sign}
+    context = {'all_posts' : data_list, 'show_user': show_user, 'request_user' : request.user, 'sign': sign}
     # context = {'request' : request}
     return render(request,"home/userprofile.html", context)
  
@@ -493,8 +495,6 @@ def comment_save(request):
         com.user_id = user_id
         com.save()
 
-
-   
         temp = {}
         temp['id'] = com.id
         temp['comment'] = com.comment
@@ -505,5 +505,17 @@ def comment_save(request):
         # temp['updated_at'] = com.updated_at
         msg = True
         return JsonResponse({"msg": msg,"data": temp}, status=200)
+ 
+ #follow save
+def follow_save(request):
+    if request.method == "POST" and request.is_ajax():
+        friend_id = request.POST.get('id')
+        newfriend = FriendRequest()
+        print(request.user.id, friend_id)
+        newfriend.sender_id = request.user.id
+        newfriend.reciever_id = friend_id
+        newfriend.save()
+        msg = True
+        return JsonResponse({"msg": msg}, status=200)
  
 
