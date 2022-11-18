@@ -506,10 +506,14 @@ def comment_save(request):
         msg = True
         return JsonResponse({"msg": msg,"data": temp}, status=200)
  
- #follow save
+#follow save
 def follow_save(request):
     if request.method == "POST" and request.is_ajax():
         friend_id = request.POST.get('id')
+        exist = FriendRequest.objects.filter(sender_id = request.user.id, reciever_id = friend_id).exists()
+        if exist:
+            msg = False
+            return JsonResponse({"msg": msg}, status=200)
         newfriend = FriendRequest()
         print(request.user.id, friend_id)
         newfriend.sender_id = request.user.id
@@ -517,5 +521,31 @@ def follow_save(request):
         newfriend.save()
         msg = True
         return JsonResponse({"msg": msg}, status=200)
+
+#SEARCH
+def search(request):
+    if request.method == "POST" and request.is_ajax():
+        # a = FriendRequest.objects.all().delete()
+        searchname = request.POST.get('search')
+        exist = FriendRequest.objects.filter(sender_id = request.user.id).exists()
+        if exist:
+            data = []
+            friends = FriendRequest.objects.filter(sender_id = request.user.id)
+            
+            for friend in friends:
+                temp = {}
+                user = User.objects.get(id = friend.reciever_id)
+                if searchname in user.username:
+                    print(searchname, user.username)
+                    temp['id'] = user.id
+                    temp['username'] = user.username
+                data.append(temp)
+            msg = True
+            return JsonResponse({"msg": msg, "data": data}, status=200)
+        else:
+            msg = False
+            return JsonResponse({"msg": msg}, status=200)
+        
+  
  
 

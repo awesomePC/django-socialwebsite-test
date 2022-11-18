@@ -30,6 +30,8 @@ urlpatterns = [
     path('comment-save', views.comment_save, name='comment_save'),
     #follow-save
     path('follow-save', views.follow_save, name='follow_save'),
+    #search
+    path('search', views.search, name='search'),
 
     # Matches any html file
     # re_path(r'^.*\.*', views.pages, name='pages'),

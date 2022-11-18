@@ -381,8 +381,8 @@
 
           <!-- Search List -->
           <div class=" bg-white shadow-3xl absolute z-50 top-14 rounded-lg w-72 left-0" x-show="open" style="display: none;">
-            <ul class="">
-              <li class="px-4 py-3 hover:bg-slate-100">
+            <ul id="searchList" class="">
+              <!-- <li class="px-4 py-3 hover:bg-slate-100">
                 <a href="#" class="flex items-center">
                   <img src="{{ ASSETS_ROOT }}/img/search-img.png" class="w-auto h-auto" alt="">
                   <div class="ml-3">
@@ -417,7 +417,7 @@
                     <div class="text-sm text-slate-600">1K followers</div>
                   </div>
                 </a>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -780,19 +780,47 @@
       // end upload
       
       //search
-      $("#followbtn").click(function() {
-
-        let show_user_id = {{show_user.id}};
-        let user_id = {{user.id}};
+      $('#search').keypress(function() {
+        let searchfriend = $('#search').val();
         //ajax 
         $.ajax({
-          data: {csrfmiddlewaretoken: '{{ csrf_token }}',id: show_user_id}, // получаяем данные формы
-          url: "{% url 'follow_save' %}",
+          data: {csrfmiddlewaretoken: '{{ csrf_token }}',search: searchfriend}, // получаяем данные формы
+          url: "{% url 'search' %}",
           type: "POST",
           success: function (response) {
-            if(response.msg)
-            alert("saved successfully");
-            alert();
+            if(response.msg) {
+              let re_data = response.data;
+              let datalength = re_data.length;
+              if(datalength == 0)
+              {
+                alert("no match");
+              } else {
+                console.log(re_data);
+                let str = ``;
+                for(let i = 0; i < datalength; i++)
+                {
+                  let url = "{% url 'userprofile' '1' %}";
+                  url = url.replace('1', re_data[i].id);
+
+                  str += `<li class="px-4 py-3 hover:bg-slate-100">
+                            <a  href=${url} class="flex items-center">
+                              <img src="{{ ASSETS_ROOT }}/img/search-img.png" class="w-auto h-auto" alt="">
+                              <div class="ml-3">
+                                <div class="text-base font-medium">${re_data[i].username}</div>
+                                <div class="text-sm text-slate-600">100K followers</div>
+                              </div>
+                            </a>
+                          </li>`;
+                  
+                }
+                $("#searchList").html(str);
+
+              }
+            } else {
+              alert("no friends");
+            }
+             
+            
 
           },
 
